@@ -1,12 +1,11 @@
 package AccionesSemanticas;
-
 import main.*;
 
-public class AccionSemantica14 extends AccionSemantica {
+public class AccionSemantica8 extends AccionSemantica {
 
     @Override
     public void run() {
+
         Main.cursor--;
-        //retorna id del token =;
     }
 }

@@ -1,24 +1,16 @@
 package AccionesSemanticas;
 import main.*;
 
-public class AccionSemantica6 extends AccionSemantica{
-
+public class AccionSemantica6 extends AccionSemantica {
     @Override
     public void run() {
         Main.cursor--;
+        double doble = Double.parseDouble(buffer);
 
-        if (buffer.length() > 20){
-            buffer.substring(0,19);
-            //todo:largar warning indicando la linea
-        } else {
-            /*Buscar en tabla de Símbolos.
-                    Si está,
-                        devolver el identificador.
-                    Si no,
-                        Alta en la TS
-                        Devolver ID + Puntero TS
-            */
-
+        if ((doble > 2.2250738585272014d-308 && doble < 1.7976931348623157d+308) || (doble > -1.7976931348623157d+308 && doble <  -2.2250738585072014d-308) || (doble == 0.0)){
+            //Alta en la TS
+            //Devolver CTE + Punt TS
         }
+
     }
 }
