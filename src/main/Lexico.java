@@ -93,15 +93,22 @@ public class Lexico {
     }
 
     public Token getToken(){
-        //if (codigoFuente.charAt(cursor) != -1)
-          //  caracter = codigoFuente.charAt(cursor);
+
+        caracter = codigoFuente.charAt(cursor);
         int estadoActual = 0;
 
-        while (caracter != '$'){
-            acciones[estadoActual][getColumna(caracter)]
-            cursor++;
-        }
+        while (caracter != '$'){ // mientras no llego al final del codigo
+            if (getColumna(caracter) != -1) { // si no es un caracter invalido
+                acciones[estadoActual][getColumna(caracter)].run(); // ver que devuelve
+                estadoActual = transiciones[estadoActual][getColumna(caracter)]; // transicion de estado
+                //seguir con el codigo de jose
+            }
+            if (caracter == '\n')
+                linea++;
 
+            cursor++;
+            caracter = codigoFuente.charAt(cursor);
+        }
     }
 
     private int getColumna(char caracter) {
@@ -135,7 +142,7 @@ public class Lexico {
             return 13; // TODO 'u'
         if (caracter == 105)
             return 14; // 'i'
-        if ((caracter == 09) || (caracter == 32))
+        if ((caracter == 9) || (caracter == 32))
             return 15; // >blanco o tab
         if (caracter == 100)
             return 16; // 'd'
