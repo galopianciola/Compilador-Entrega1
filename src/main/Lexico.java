@@ -1,16 +1,50 @@
 package main;
+
 import AccionesSemanticas.*;
 import Errores.*;
 
-public class Lexico {
+import java.util.ArrayList;
 
-    public static char caracter;  //caracter que se esta leyendo del codigo fuente
-    public static int cursor; //indice del codigo fuente
-    public static int linea; //linea que se esta leyendo del codigo fuente
+public class Lexico {
 
     private int F;    // Estado final
     private StringBuilder codigoFuente;
 
+    public static char caracter; //caracter que se esta leyendo del codigo fuente
+    public static int cursor; //indice del codigo fuente
+    public static int linea; //linea que se esta leyendo del codigo fuente
+    public static ArrayList<String> palabrasReservadas = new ArrayList<String>();
+
+    //TOKEN SIN ASCII
+    public static final int IDE = 257;
+    public static final int CTE = 258;
+    public static final int MAYOR_IGUAL = 259;
+    public static final int MENOR_IGUAL = 260;
+    public static final int IGUAL_IGUAL = 261;
+    public static final int DISTINTO = 262;
+    public static final int COMENT = 263;
+    public static final int CADENA = 264;
+
+
+    // PALABRAS RESERVADAS
+    public static final int IF = 265;
+    public static final int THEN = 266;
+    public static final int ELSE = 267;
+    public static final int END_IF = 268;
+    public static final int OUT = 269;
+    public static final int FUNC = 270;
+    public static final int RETURN = 271;
+    public static final int UINT = 272;
+    public static final int DOUBLE = 273;
+    public static final int NI = 274;
+    public static final int REF = 276;
+    public final static int FOR = 277;
+    public final static int UP = 278;
+    public final static int DOWN = 279;
+    public final static int PROC = 280;
+
+
+    // ACCIONES SEMANTICAS
     private AccionSemantica as1 = new AccionSemantica1();
     private AccionSemantica as2 = new AccionSemantica2();
     private AccionSemantica as3 = new AccionSemantica3();
@@ -28,7 +62,9 @@ public class Lexico {
     private AccionSemantica as15 = new AccionSemantica15();
     private AccionSemantica as16 = new AccionSemantica16();
 
-    public Error1 err1 = new Error1();
+
+    // ERRORES
+    private Error1 err1 = new Error1();
     private Error2 err2 = new Error2();
     private Error3 err3 = new Error3();
     private Error4 err4 = new Error4();
@@ -39,89 +75,110 @@ public class Lexico {
     private Error9 err9 = new Error9();
 
     private int[][] transiciones = {
-            //L  l  d  .  %  <  >  =  "  !  +  -  _  u  i  bt  d  o \n  $
+            //L  l  d  .  %  <  >  =  "  !  +  -  _  u  i  bt  d ot \n  $
             //0  1  2  3  4  5  6  7  8  9 10  11 12 13 14 15 16 17 18 19
-            { 1, 2, 3, 6,11,13,14,15,17,16, F, F,-1, 2, 2, 0, 2, F, 0, F},//0
-            { 1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},//1
-            { F, 2, 2, F, F, F, F, F, F, F, F, F, 2, F, F, F, F, F, F, F},//2
-            {-1,-1, 3, 7,-1,-1,-1,-1,-1,-1,-1,-1, 4,-1,-1,-1,-1,-1,-1, F},//3
-            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 5,-1,-1,-1,-1,-1, F},//4
-            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, F,-1,-1,-1,-1, F},//5
-            {-1,-1, 7,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, F},//6
-            { F, F, 7, F, F, F, F, F, F, F, F, F, F, F, F, F, 8, F, F, F},//7
-            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 9, 9,-1,-1,-1,-1,-1,-1,-1, F},//8
-            {-1,-1,10,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, F},//9
-            { F, F,10, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},//10
-            { F, F, F, F,12, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},//11
-            {12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12, 0, F},//12
-            { F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},//13
-            { 1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},//14
-            { F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},//15
-            {-1,-1,-1,-1,-1,-1,-1, F,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, F},//16
-            {17,17,17,17,17,17,17,17, F,17,17,18,17,17,17,17,17,17,-1, F},//17
-            {17,17,17,17,17,17,17,17,17,17,17,18,17,17,17,17,17,17,17, F},//18
+            {1, 2, 3, 6, 11, 13, 14, 15, 17, 16, F, F, -1, 2, 2, 0, 2, F, 0, F},//0
+            {1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},//1
+            {F, 2, 2, F, F, F, F, F, F, F, F, F, 2, 2, 2, F, 2, F, F, F},//2
+            {-1, -1, 3, 7, -1, -1, -1, -1, -1, -1, -1, -1, 4, -1, -1, -1, -1, -1, -1, F},//3
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 5, -1, -1, -1, -1, -1, F},//4
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, F, -1, -1, -1, -1, F},//5
+            {-1, -1, 7, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, F},//6
+            {F, F, 7, F, F, F, F, F, F, F, F, F, F, F, F, F, 8, F, F, F},//7
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 9, 9, -1, -1, -1, -1, -1, -1, -1, F},//8
+            {-1, -1, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, F},//9
+            {F, F, 10, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},//10
+            {F, F, F, F, 12, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},//11
+            {12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0, F},//12
+            {F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},//13
+            {1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},//14
+            {F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},//15
+            {-1, -1, -1, -1, -1, -1, -1, F, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, F},//16
+            {17, 17, 17, 17, 17, 17, 17, 17, F, 17, 17, 18, 17, 17, 17, 17, 17, 17, -1, F},//17
+            {17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 18, 17, 17, 17, 17, 17, 17, 17, F},//18
     };
 
     private AccionSemantica[][] acciones = {
-            // L    l    d    .    %    <    >    =    "    !    +    -    _    u    i   bl   'd'  <>   \n
+            // L    l    d    .    %    <    >    =    "    !    +    -    _   'u'  'i'  bl   'd'  <>   \n
             // 0    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18
-            { as1, as1, as1, as1,null,null,null,null, as1,null, as7, as7,err1, as1, as1,null, as1, as7,null},//0
-            { as2, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3},//1
-            { as4, as2, as2, as4, as4, as4, as4, as4, as4, as4, as4, as4, as2, as4, as4, as4, as4, as4, as4},//2
-            {err2,err2, as2, as2,err2,err2,err2,err2,err2,err2,err2,err2,null,err2,err2,err2,err2,err2,err2},//3
-            {err3,err3,err3,err3,err3,err3,err3,err3,err3,err3,err3,err3,err3,null,err3,err3,err3,err3,err3},//4
-            {err4,err4,err4,err4,err4,err4,err4,err4,err4,err4,err4,err4,err4,err4, as5,err4,err4,err4,err4},//5
-            {err5,err5, as2,err5,err5,err5,err5,err5,err5,err5,err5,err5,err5,err5,err5,err5,err5,err5,err5},//6
-            { as6, as6, as2, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as2, as6, as6},//7
-            {err6,err6,err6,err6,err6,err6,err6,err6,err6,err6, as2, as2,err6,err6,err6,err6,err6,err6,err6},//8
-            {err5,err5, as2,err5,err5,err5,err5,err5,err5,err5,err5,err5,err5,err5,err5,err5,err5,err5,err5},//9
+            {as1, as1, as1, as1, null, null, null, null, as1, null, as7, as7, err1, as1, as1, null, as1, as7, null},//0
+            {as2, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3},//1
+            {as4, as2, as2, as4, as4, as4, as4, as4, as4, as4, as4, as4, as2, as2, as2, as4, as2, as4, as4},//2
+            {err2, err2, as2, as2, err2, err2, err2, err2, err2, err2, err2, err2, null, err2, err2, err2, err2, err2, err2},//3
+            {err3, err3, err3, err3, err3, err3, err3, err3, err3, err3, err3, err3, err3, null, err3, err3, err3, err3, err3},//4
+            {err4, err4, err4, err4, err4, err4, err4, err4, err4, err4, err4, err4, err4, err4, as5, err4, err4, err4, err4},//5
+            {err5, err5, as2, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5},//6
+            {as6, as6, as2, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as2, as6, as6},//7
+            {err6, err6, err6, err6, err6, err6, err6, err6, err6, err6, as2, as2, err6, err6, err6, err6, err6, err6, err6},//8
+            {err5, err5, as2, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5},//9
             {as6, as6, as2, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6},//10
-            {as8, as8, as8, as8,null, as8, as8, as8, as8, as8, as8, as8, as8, as8, as8, as8, as8, as8, as8},//11
-            {null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},//12
-            {as10,as10,as10,as10,as10,as10,as10, as9,as10,as10,as10,as10,as10,as10,as10,as10,as10,as10,as10},//13
-            {as12,as12,as12,as12,as12,as12,as12,as11,as12,as12,as12,as12,as12,as12,as12,as12,as12,as12,as12},//14
-            {as14,as14,as14,as14,as14,as14,as14,as13,as14,as14,as14,as14,as14,as14,as14,as14,as14,as14,as14},//15
-            {err7,err7,err7,err7,err7,err7,err7,as15,err7,err7,err7,err7,err7,err7,err7,err7,err7,err7,err7},//16
-            { as2, as2, as2, as2, as2, as2, as2, as2,as16, as2, as2, as2, as2, as2, as2, as2, as2, as2,err8},//17
-            { as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2} //18
+            {as8, as8, as8, as8, null, as8, as8, as8, as8, as8, as8, as8, as8, as8, as8, as8, as8, as8, as8},//11
+            {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},//12
+            {as10, as10, as10, as10, as10, as10, as10, as9, as10, as10, as10, as10, as10, as10, as10, as10, as10, as10, as10},//13
+            {as12, as12, as12, as12, as12, as12, as12, as11, as12, as12, as12, as12, as12, as12, as12, as12, as12, as12, as12},//14
+            {as14, as14, as14, as14, as14, as14, as14, as13, as14, as14, as14, as14, as14, as14, as14, as14, as14, as14, as14},//15
+            {err7, err7, err7, err7, err7, err7, err7, as15, err7, err7, err7, err7, err7, err7, err7, err7, err7, err7, err7},//16
+            {as2, as2, as2, as2, as2, as2, as2, as2, as16, as2, as2, as2, as2, as2, as2, as2, as2, as2, err8},//17
+            {as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2} //18
     };
 
-    public Lexico(StringBuilder codigoFuente){
+    public Lexico(StringBuilder codigoFuente) {
         linea = 1;
         cursor = 0;
         this.codigoFuente = codigoFuente;
+
+        palabrasReservadas.add("IF");
+        palabrasReservadas.add("THEN");
+        palabrasReservadas.add("ELSE");
+        palabrasReservadas.add("END_IF");
+        palabrasReservadas.add("OUT");
+        palabrasReservadas.add("FUNC");
+        palabrasReservadas.add("RETURN");
+        palabrasReservadas.add("UINT");
+        palabrasReservadas.add("DOUBLE");
+        palabrasReservadas.add("NI");
+        palabrasReservadas.add("REF");
+        palabrasReservadas.add("FOR");
+        palabrasReservadas.add("UP");
+        palabrasReservadas.add("DOWN");
+        palabrasReservadas.add("PROC");
     }
 
-    public Token getToken(){
-
+    public int getToken() {
         caracter = codigoFuente.charAt(cursor);
         int estadoActual = 0;
 
-        while (caracter != '$'){ // mientras no llego al final del codigo
+        while (caracter != '$') { // mientras no llego al final del codigo
             if (getColumna(caracter) != -1) { // si no es un caracter invalido
-                acciones[estadoActual][getColumna(caracter)].run(); // ver que devuelve
+                acciones[estadoActual][getColumna(caracter)].run(); //TODO ver que devuelve, puede ser null
                 estadoActual = transiciones[estadoActual][getColumna(caracter)]; // transicion de estado
                 //seguir con el codigo de jose
             }
             if (caracter == '\n')
                 linea++;
-
             cursor++;
             caracter = codigoFuente.charAt(cursor);
         }
+        return 0;
     }
 
     private int getColumna(char caracter) {
+        if (caracter == 117)
+            return 13; // 'u'
+        if (caracter == 105)
+            return 14; // 'i'
+        if (caracter == 100)
+            return 16; // 'd'
         if ((caracter >= 65) && (caracter <= 90))
-            return 0; //LETRAS mayusculas
+            return 0; // LETRAS mayusculas
         if ((caracter >= 97) && (caracter <= 122))
             return 1; // letras minusculas
         if ((caracter >= 48) && (caracter <= 57))
             return 2; // digitos
         if (caracter == 46)
-            return 3; //.
+            return 3; // .
         if (caracter == 37)
-            return 4; //%
+            return 4; // %
         if (caracter == 60)
             return 5; // <
         if (caracter == 62)
@@ -138,16 +195,10 @@ public class Lexico {
             return 11; // -
         if (caracter == 95)
             return 12; // _
-        if (caracter == 117)
-            return 13; // TODO 'u'
-        if (caracter == 105)
-            return 14; // 'i'
         if ((caracter == 9) || (caracter == 32))
             return 15; // >blanco o tab
-        if (caracter == 100)
-            return 16; // 'd'
         if (caracter == 111)
-            return 17; // 'o'
+            return 17; // 'otro'
         if (caracter == 10)
             return 18; // 'nueva linea'
        /* if (caracter == 36)

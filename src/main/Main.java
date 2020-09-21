@@ -5,6 +5,7 @@ import java.io.*;
 public class Main{
 
     private static BufferedReader codigo;
+    public static TablaSimbolos tSimbolos = new TablaSimbolos();
 
     private static StringBuilder getCodigo(BufferedReader ubicacion){
         StringBuilder buffer = new StringBuilder();

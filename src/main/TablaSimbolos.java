@@ -2,8 +2,12 @@ package main;
 import java.util.Hashtable;
 
 public class TablaSimbolos {
-    private static Hashtable<String,String> tSimbolos = new Hashtable<String,String>();
+    private static Hashtable<String,String> tSimbolos;
 
+
+    public TablaSimbolos(){
+        tSimbolos = new Hashtable<String,String>();
+    }
 
     public void agregarSimbolo(String lexema,String tipo){
         if (tSimbolos.containsKey(lexema))

@@ -5,7 +5,7 @@ import main.*;
 public class Error4 extends AccionSemantica {
 
     @Override
-    public void run() {
+    public Token run() {
         System.out.println("Error de compilación en la linea " + Lexico.linea + ": se esperaba una 'i' y llegó el carácter " + Lexico.caracter);
     }
 }

@@ -5,7 +5,7 @@ import main.*;
 public class AccionSemantica8 extends AccionSemantica {
 
     @Override
-    public void run() {
+    public Token run() {
 
         Lexico.cursor--;
     }

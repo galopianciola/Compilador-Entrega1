@@ -4,7 +4,7 @@ import main.*;
 
 public class AccionSemantica5 extends AccionSemantica {
     @Override
-    public void run() {
+    public Token run() {
         int nro = Integer.parseInt(buffer);
 
         if ((nro > 0) && (nro < (2 ^ 16 - 1))) {

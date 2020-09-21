@@ -5,7 +5,7 @@ import main.*;
 public class AccionSemantica7 extends AccionSemantica {
 
     @Override
-    public void run() {
+    public Token run() {
         switch (Lexico.caracter) {
             case '+':
                 //return token

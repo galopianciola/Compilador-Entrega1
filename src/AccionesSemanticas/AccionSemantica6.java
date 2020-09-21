@@ -4,7 +4,7 @@ import main.*;
 
 public class AccionSemantica6 extends AccionSemantica {
     @Override
-    public void run() {
+    public Token run() {
         Lexico.cursor--;
         double doble = Double.parseDouble(buffer);
 

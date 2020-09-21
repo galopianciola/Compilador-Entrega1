@@ -5,7 +5,7 @@ import main.*;
 public class AccionSemantica4 extends AccionSemantica {
 
     @Override
-    public void run() {
+    public Token run() {
         Lexico.cursor--;
 
         if (buffer.length() > 20) {

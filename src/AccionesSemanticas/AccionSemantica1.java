@@ -4,8 +4,8 @@ import main.*;
 public class AccionSemantica1 extends AccionSemantica {
 
     @Override
-    public void run() {
-
+    public Token run() {
         buffer = Character.toString(Lexico.caracter);
+        return null;
     }
 }

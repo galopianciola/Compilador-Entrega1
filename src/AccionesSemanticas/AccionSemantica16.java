@@ -4,7 +4,7 @@ import main.*;
 
 public class AccionSemantica16 extends AccionSemantica {
     @Override
-    public void run() {
+    public Token run() {
         buffer = buffer + Lexico.caracter;
 
         //Alta en la TS
