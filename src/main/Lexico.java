@@ -148,14 +148,16 @@ public class Lexico {
         caracter = codigoFuente.charAt(cursor);
         int estadoActual = 0;
         Token token = null;
-        while (caracter != '$') { // mientras no llego al final del codigo
-            if (getColumna(caracter) != -1) { // si no es un caracter invalido
-                if (acciones[estadoActual][getColumna(caracter)] != null)
-                    token = acciones[estadoActual][getColumna(caracter)].run();
 
-                estadoActual = transiciones[estadoActual][getColumna(caracter)]; // transicion de estado
+        while (caracter != '$') { // mientras no llego al final del codigo
+            int columna = getColumna(caracter);
+            if (columna != -1) { // si no es un caracter invalido
+                if (acciones[estadoActual][columna] != null) // si hay una AS
+                    token = acciones[estadoActual][columna].run(); //ejecuto la AS correspondiente
+
+                estadoActual = transiciones[estadoActual][columna]; // transicion de estado siempre
                 //TODO:deberiamos preguntar si token no es null? por tema errores.
-                if(estadoActual == F){
+                if(estadoActual == F){ //si estoy en final (tengo un token listo para devolver)
                     return token;
                 }
             }

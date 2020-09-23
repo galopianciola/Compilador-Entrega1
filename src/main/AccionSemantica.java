@@ -1,7 +1,7 @@
 package main;
 
 public abstract class AccionSemantica {
-    protected String buffer = "";
+    protected static String buffer = "";
 
     public abstract Token run();
 }

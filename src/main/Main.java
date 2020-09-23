@@ -30,7 +30,8 @@ public class Main{
     }
 
     public static void main(String[]args) {
-        String direccion = "/Users/macbook/IdeaProjects/Compilador/pruba.txt";
+        //CARGA DE ARCHIVO
+        String direccion = "/Users/macbook/Downloads/codigo.txt";
         InputStream is = new ByteArrayInputStream(direccion.getBytes());
 
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -43,5 +44,14 @@ public class Main{
                 linea++;
         }
         System.out.println("cant lineas = " + linea);
+
+        //----------------
+
+        Lexico l1 = new Lexico(codigo);
+
+        Token token = l1.getToken();
+        if (token != null)
+            System.out.println(token.getId());
+        //System.out.println(l1.getToken().getLexema());
     }
 }
