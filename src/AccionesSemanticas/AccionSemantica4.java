@@ -10,21 +10,11 @@ public class AccionSemantica4 extends AccionSemantica {
 
         if (buffer.length() > 20) {
             buffer.substring(0, 19);
-
-            //todo:largar warning indicando la linea
+            System.out.println("Warning: en la linea "+ Lexico.linea +" se truncó el identificador a 20 caracteres");
         }
         if (!Main.tSimbolos.existeLexema(buffer)) {
-            //Main.tSimbolos.agregarSimbolo(buffer, Lexico.IDE); // todo: por qué dos string??
+            Main.tSimbolos.agregarSimbolo(buffer, Lexico.IDE);
         }
         return new Token(Lexico.IDE, buffer);
     }
-
-            /*Buscar en tabla de Símbolos.
-                    Si está,
-                        devolver el identificador.
-                    Si no,
-                        Alta en la TS
-                        Devolver ID + Puntero TS
-            */
-
 }

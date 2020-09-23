@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Lexico {
 
-    private int F;    // Estado final
+    private int F = 100;    // Estado final
     private StringBuilder codigoFuente;
 
     public static char caracter; //caracter que se esta leyendo del codigo fuente
@@ -144,22 +144,30 @@ public class Lexico {
         palabrasReservadas.add("PROC");
     }
 
-    public int getToken() {
+    public Token getToken() {
         caracter = codigoFuente.charAt(cursor);
         int estadoActual = 0;
-
+        Token token = null;
         while (caracter != '$') { // mientras no llego al final del codigo
             if (getColumna(caracter) != -1) { // si no es un caracter invalido
-                acciones[estadoActual][getColumna(caracter)].run(); //TODO ver que devuelve, puede ser null
+                if (acciones[estadoActual][getColumna(caracter)] != null)
+                    token = acciones[estadoActual][getColumna(caracter)].run();
+
                 estadoActual = transiciones[estadoActual][getColumna(caracter)]; // transicion de estado
-                //seguir con el codigo de jose
+                //TODO:deberiamos preguntar si token no es null? por tema errores.
+                if(estadoActual == F){
+                    return token;
+                }
+            }
+            else{ // error por caracter invalido
+                token = new Error1().run();
             }
             if (caracter == '\n')
                 linea++;
             cursor++;
             caracter = codigoFuente.charAt(cursor);
         }
-        return 0;
+        return token;
     }
 
     private int getColumna(char caracter) {
