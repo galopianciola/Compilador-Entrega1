@@ -55,10 +55,12 @@ public class Main{
             System.out.println(token.getLexema());
         }
 
+        /*
         Token token2 = l1.getToken();
         if (token2 != null){
             System.out.println(token2.getId());
             System.out.println(token2.getLexema());
         }
+        */
     }
 }

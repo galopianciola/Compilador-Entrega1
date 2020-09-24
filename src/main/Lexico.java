@@ -151,7 +151,6 @@ public class Lexico {
         Token token = null;
 
         while (caracter != '$') { // mientras no llego al final del codigo
-            cursor++;
             columna = getColumna(caracter);
             if (columna != -1) { // si no es un caracter invalido
                 if (acciones[estadoActual][columna] != null) // si hay una AS
@@ -159,14 +158,17 @@ public class Lexico {
 
                 estadoActual = transiciones[estadoActual][columna]; // transicion de estado siempre
                 //TODO:deberiamos preguntar si token no es null? por tema errores.
-                if(estadoActual == F) //si estoy en final (tengo un token listo para devolver)
+                if(estadoActual == F) { //si estoy en final (tengo un token listo para devolver)
+                    cursor++;
                     return token;
+                }
             }
             else{ // error por caracter invalido
                 token = new Error1().run();
             }
             if (caracter == '\n')
                 linea++;
+            cursor++;
             caracter = codigoFuente.charAt(cursor);
         }
         columna = getColumna(caracter);
