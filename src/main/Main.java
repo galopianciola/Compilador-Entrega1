@@ -17,9 +17,10 @@ public class Main{
             while ((readLine = codigo.readLine())!= null) {
                 buffer.append(readLine + "\n");
             }
-            //buffer.deleteCharAt(buffer.length()-1);
-            buffer.append("$");
+
+            buffer.deleteCharAt(buffer.length()-1);
             System.out.print(buffer);
+            buffer.append("$");
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -62,10 +63,10 @@ public class Main{
             System.out.println(token2.getId());
             System.out.println(token2.getLexema());
         }
-        Token token3 = l1.getToken();
+        /*Token token3 = l1.getToken();
         if (token3 != null){
             System.out.println(token3.getId());
             System.out.println(token3.getLexema());
-        }
+        }*/
     }
 }
