@@ -99,9 +99,9 @@ public class Lexico {
     };
 
     private AccionSemantica[][] acciones = {
-            // L    l    d    .    %    <    >    =    "    !    +    -    _   'u'  'i'  bl   'd'  <>   \n
+            // L    l    d    .    %    <    >    =    "    !    +    -    _   'u'  'i'  bl   'd'  ot   \n
             // 0    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18
-            {as1, as1, as1, as1, null, null, null, null, as1, null, as7, as7, err1, as1, as1, null, as1, as7, null},//0
+            {as1, as1, as1, as1, null, null, null, null, as1, null, as7, as7, err1, as1, as1, null, as1, as7, null, null},//0
             {as2, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3},//1
             {as4, as2, as2, as4, as4, as4, as4, as4, as4, as4, as4, as4, as2, as2, as2, as4, as2, as4, as4, as4},//2
             {err2, err2, as2, as2, err2, err2, err2, err2, err2, err2, err2, err2, null, err2, err2, err2, err2, err2, err2},//3
@@ -151,6 +151,8 @@ public class Lexico {
         Token token = null;
 
         while (caracter != '$') { // mientras no llego al final del codigo
+            caracter = codigoFuente.charAt(cursor);
+            cursor++;
             columna = getColumna(caracter);
             if (columna != -1) { // si no es un caracter invalido
                 if (acciones[estadoActual][columna] != null) // si hay una AS
@@ -158,21 +160,23 @@ public class Lexico {
 
                 estadoActual = transiciones[estadoActual][columna]; // transicion de estado siempre
                 //TODO:deberiamos preguntar si token no es null? por tema errores.
-                if(estadoActual == F) { //si estoy en final (tengo un token listo para devolver)
-                    cursor++;
-                    return token;
+                if (estadoActual == F) //si estoy en final (tengo un token listo para devolver)
+                    if (caracter == '$') {
+                        return new Token('$');
+                    } else {
+                        return token;
+                    }
+                else if (estadoActual == -1) {
+                    cursor--;
+                    return token;//estadoActual = 0;//DEBERIA IR A FINALo al inicio?
                 }
-            }
-            else{ // error por caracter invalido
-                token = new Error1().run();
+            } else { // error por caracter invalido
+                return new Error1().run();
             }
             if (caracter == '\n')
                 linea++;
-            cursor++;
-            caracter = codigoFuente.charAt(cursor);
         }
-        columna = getColumna(caracter);
-        return acciones[estadoActual][columna].run();
+        return null;
     }
 
     private int getColumna(char caracter) {
@@ -210,11 +214,11 @@ public class Lexico {
             return 12; // _
         if ((caracter == 9) || (caracter == 32))
             return 15; // >blanco o tab
-        if (caracter == 111)
+        if (caracter == 42 || caracter == 44 || caracter == 47 || caracter == 41 || caracter == 40 || caracter == 123 || caracter == 125 || caracter == 58 || caracter == 59)
             return 17; // 'otro'
         if (caracter == 10)
             return 18; // 'nueva linea'
-       if (caracter == 36)
+        if (caracter == 36)
             return 19; // $
         return -1; //caracter no valido
     }

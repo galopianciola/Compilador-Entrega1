@@ -1,7 +1,0 @@
-token getToken(){
-	holaaa
-	vp
-	{	
-		caracter
-	}
-}

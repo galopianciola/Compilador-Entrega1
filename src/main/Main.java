@@ -31,7 +31,7 @@ public class Main{
 
     public static void main(String[]args) {
         //-------------- CARGA DE ARCHIVO --------------
-        String direccion = "/Users/macbook/Downloads/codigo.txt";
+        String direccion = "test.txt";
         InputStream is = new ByteArrayInputStream(direccion.getBytes());
 
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -55,12 +55,11 @@ public class Main{
             System.out.println(token.getLexema());
         }
 
-        /*
+
         Token token2 = l1.getToken();
         if (token2 != null){
             System.out.println(token2.getId());
             System.out.println(token2.getLexema());
         }
-        */
     }
 }
