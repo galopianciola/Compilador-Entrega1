@@ -6,7 +6,7 @@ public class Error7 extends AccionSemantica {
 
     @Override
     public Token run() {
-        System.out.println("Error lexico en la linea " + Lexico.linea + ": se esperaba una '=' y llegó el cáracter " + Lexico.caracter);
+        System.out.println("Error lexico en la linea " + Lexico.linea + ": se esperaba un '=' después del '!' y llegó otro caracter");
         return null;
     }
 }

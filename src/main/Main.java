@@ -17,8 +17,9 @@ public class Main{
             while ((readLine = codigo.readLine())!= null) {
                 buffer.append(readLine + "\n");
             }
-
+            //buffer.deleteCharAt(buffer.length()-1);
             buffer.append("$");
+            System.out.print(buffer);
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -49,17 +50,22 @@ public class Main{
 
         Lexico l1 = new Lexico(codigo);
 
-        Token token = l1.getToken();
+/*        Token token = l1.getToken();
         if (token != null){
             System.out.println(token.getId());
             System.out.println(token.getLexema());
-        }
+        }*/
 
 
         Token token2 = l1.getToken();
         if (token2 != null){
             System.out.println(token2.getId());
             System.out.println(token2.getLexema());
+        }
+        Token token3 = l1.getToken();
+        if (token3 != null){
+            System.out.println(token3.getId());
+            System.out.println(token3.getLexema());
         }
     }
 }
