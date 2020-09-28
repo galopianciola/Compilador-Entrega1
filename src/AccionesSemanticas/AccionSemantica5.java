@@ -6,7 +6,7 @@ import main.*;
 public class AccionSemantica5 extends AccionSemantica {
     @Override
     public Token run() {
-        Lexico.cursor++;
+        Lexico.caracter = Lexico.codigoFuente.charAt(Lexico.cursor);
         Integer nro = Integer.parseInt(AccionSemantica.buffer);
         //a
         if ((nro >= 0) && (nro <= (Math.pow(2,16) - 1))) {
