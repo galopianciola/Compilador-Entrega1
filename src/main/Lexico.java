@@ -112,7 +112,7 @@ public class Lexico {
             {as6, as6, as2, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as2, as6, as6, as6},//7
             {err6, err6, err6, err6, err6, err6, err6, err6, err6, err6, as2, as2, err6, err6, err6, err6, err6, err6, err6},//8
             {err5, err5, as2, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5, err5},//9
-            {as6, as6, as2, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6},//10
+            {as6, as6, as2, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6, as6},//10
             {as8, as8, as8, as8, null, as8, as8, as8, as8, as8, as8, as8, as8, as8, as8, as8, as8, as8, as8},//11
             {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, err11},//12
             {as10, as10, as10, as10, as10, as10, as10, as9, as10, as10, as10, as10, as10, as10, as10, as10, as10, as10, as10},//13
@@ -127,6 +127,8 @@ public class Lexico {
         linea = 1;
         cursor = 0;
         this.codigoFuente = codigoFuente;
+
+        caracter = codigoFuente.charAt(cursor);
 
         palabrasReservadas.add("IF");
         palabrasReservadas.add("THEN");
@@ -146,12 +148,11 @@ public class Lexico {
     }
 
     public Token getToken() {
-        caracter = codigoFuente.charAt(cursor);
         int estadoActual = 0;
         int columna = -1;
         Token token = null;
 
-        while (caracter != '$') { // mientras no llego al final del codigo
+        while ((caracter != '$') && (cursor<codigoFuente.length())) { // mientras no llego al final del codigo
             caracter = codigoFuente.charAt(cursor);
             cursor++;
             columna = getColumna(caracter);
@@ -161,12 +162,13 @@ public class Lexico {
 
                 estadoActual = transiciones[estadoActual][columna]; // transicion de estado siempre
                 //TODO:deberiamos preguntar si token no es null? por tema errores.
-                if (estadoActual == F) //si estoy en final (tengo un token listo para devolver)
-                    if (caracter == '$') {
-                        return new Token('$');
+                if (estadoActual == F)//si estoy en final (tengo un token listo para devolver)
+                    return token;
+                   /* if (caracter == '$') {
+                        //return new Token('$');
                     } else {
                         return token;
-                    }
+                    }*/
                 else if (estadoActual == -1) {
                     cursor--;
                     return token;//estadoActual = 0;//DEBERIA IR A FINALo al inicio?
@@ -177,7 +179,7 @@ public class Lexico {
             if (caracter == '\n')
                 linea++;
         }
-        return null;
+        return new Token('$');
     }
 
     private int getColumna(char caracter) {

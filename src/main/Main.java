@@ -19,7 +19,7 @@ public class Main{
             }
 
             buffer.deleteCharAt(buffer.length()-1);
-            System.out.print(buffer);
+            //System.out.println(buffer);
             buffer.append("$");
         }
         catch (FileNotFoundException e) {
@@ -45,17 +45,17 @@ public class Main{
             if (codigo.charAt(i) == '\n')
                 linea++;
         }
-        System.out.println("cant lineas = " + linea);
+        //System.out.println("cant lineas = " + linea);
 
         //-------------- ///// // /////// --------------
 
         Lexico l1 = new Lexico(codigo);
 
-/*        Token token = l1.getToken();
+        Token token = l1.getToken();
         if (token != null){
             System.out.println(token.getId());
             System.out.println(token.getLexema());
-        }*/
+        }
 
 
         Token token2 = l1.getToken();

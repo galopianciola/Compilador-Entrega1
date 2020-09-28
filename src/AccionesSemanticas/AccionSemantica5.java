@@ -6,9 +6,10 @@ import main.*;
 public class AccionSemantica5 extends AccionSemantica {
     @Override
     public Token run() {
+        Lexico.cursor++;
         Integer nro = Integer.parseInt(AccionSemantica.buffer);
         //a
-        if ((nro > 0) && (nro < (Math.pow(2,16) - 1))) {
+        if ((nro >= 0) && (nro <= (Math.pow(2,16) - 1))) {
             Main.tSimbolos.agregarSimbolo(buffer, Lexico.IDE);
             return new Token(Lexico.CTE, buffer);
         }
