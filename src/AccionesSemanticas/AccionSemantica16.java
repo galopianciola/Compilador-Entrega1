@@ -5,6 +5,7 @@ import main.*;
 public class AccionSemantica16 extends AccionSemantica {
     @Override
     public Token run() {
+        Lexico.cursor++;
         buffer = buffer + Lexico.caracter;
         buffer = buffer.replace("-", "");
         buffer = buffer.replace("\n", "");

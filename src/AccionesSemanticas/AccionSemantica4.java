@@ -9,7 +9,7 @@ public class AccionSemantica4 extends AccionSemantica {
         Lexico.cursor--;
 
         if (buffer.length() > 20) {
-            buffer.substring(0, 19);
+            buffer = buffer.substring(0, 20);
             System.out.println("Warning: en la linea "+ Lexico.linea +" se truncó el identificador a 20 caracteres");
         }
         if (!Main.tSimbolos.existeLexema(buffer)) {

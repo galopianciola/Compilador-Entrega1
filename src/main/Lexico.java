@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Lexico {
 
     private int F = 100;    // Estado final
-    private StringBuilder codigoFuente;
+    public static StringBuilder codigoFuente;
 
     public static char caracter; //caracter que se esta leyendo del codigo fuente
     public static int cursor; //indice del codigo fuente
@@ -74,6 +74,7 @@ public class Lexico {
     private Error8 err8 = new Error8();
     private Error9 err9 = new Error9();
     private Error11 err11= new Error11();
+    private Error12 err12 = new Error12();
 
     private int[][] transiciones = {
             //L  l  d  .  %  <  >  =  "  !  +  -  _  u  i  bt  d ot \n  $
@@ -119,7 +120,7 @@ public class Lexico {
             {as12, as12, as12, as12, as12, as12, as12, as11, as12, as12, as12, as12, as12, as12, as12, as12, as12, as12, as12},//14
             {as14, as14, as14, as14, as14, as14, as14, as13, as14, as14, as14, as14, as14, as14, as14, as14, as14, as14, as14},//15
             {err7, err7, err7, err7, err7, err7, err7, as15, err7, err7, err7, err7, err7, err7, err7, err7, err7, err7, err7},//16
-            {as2, as2, as2, as2, as2, as2, as2, as2, as16, as2, as2, as2, as2, as2, as2, as2, as2, as2, err8},//17
+            {as2, as2, as2, as2, as2, as2, as2, as2, as16, as2, as2, as2, as2, as2, as2, as2, as2, as2, err8, err12},//17
             {as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2, as2} //18
     };
 
@@ -170,7 +171,7 @@ public class Lexico {
                         return token;
                     }*/
                 else if (estadoActual == -1) {
-                    cursor--;
+                    //cursor--;
                     return token;//estadoActual = 0;//DEBERIA IR A FINALo al inicio?
                 }
             } else { // error por caracter invalido
