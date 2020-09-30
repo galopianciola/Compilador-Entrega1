@@ -17,11 +17,12 @@ public class Lexico {
 
     //TOKEN SIN ASCII
     public static final int IDE = 257;
+    public static final int CTE_UINT = 258;
     public static final int MAYOR_IGUAL = 259;
     public static final int MENOR_IGUAL = 260;
     public static final int IGUAL_IGUAL = 261;
     public static final int DISTINTO = 262;
-    public static final int COMENT = 263;
+    public static final int CTE_DOUBLE = 263;
     public static final int CADENA = 264;
 
 

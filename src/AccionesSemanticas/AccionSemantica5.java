@@ -10,8 +10,8 @@ public class AccionSemantica5 extends AccionSemantica {
         Integer nro = Integer.parseInt(AccionSemantica.buffer);
         //a
         if ((nro >= 0) && (nro <= (Math.pow(2,16) - 1))) {
-            Main.tSimbolos.agregarSimbolo(buffer, Lexico.UINT);
-            return new Token(Lexico.UINT, buffer);
+            Main.tSimbolos.agregarSimbolo(buffer, Lexico.CTE_UINT);
+            return new Token(Lexico.CTE_UINT, buffer);
         }
         Token e9 = new Error9().run();
         return null;
