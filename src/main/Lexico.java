@@ -17,7 +17,6 @@ public class Lexico {
 
     //TOKEN SIN ASCII
     public static final int IDE = 257;
-    public static final int CTE = 258;
     public static final int MAYOR_IGUAL = 259;
     public static final int MENOR_IGUAL = 260;
     public static final int IGUAL_IGUAL = 261;
