@@ -1,0 +1,1285 @@
+   0  $accept : programa $end
+
+   1  programa : bloque
+
+   2  bloque : sentencia
+   3         | '{' bloque_sentencias '}'
+
+   4  bloque_sentencias : sentencia
+   5                    | bloque_sentencias sentencia
+
+   6  sentencia : declaracion ';'
+   7            | ejecucion ';'
+
+   8  declaracion : tipo lista_de_variables
+   9              | procedimiento
+
+  10  lista_de_variables : lista_de_variables ',' IDE
+  11                     | IDE
+
+  12  procedimiento : PROC IDE '(' lista_de_parametros ')' NI '=' CTE_UINT '{' bloque_sentencias '}'
+
+  13  lista_de_parametros : param
+  14                      | param ',' param
+  15                      | param ',' param ',' param
+
+  16  param : tipo IDE
+  17        | REF tipo IDE
+
+  18  tipo : UINT
+  19       | DOUBLE
+
+  20  ejecucion : control
+  21            | seleccion
+  22            | salida
+  23            | asignacion
+  24            | invocacion
+
+  25  control : FOR '(' UINT '=' CTE_UINT ';' condicion ';' inc_decr CTE_UINT ')' '{' bloque_sentencias '}'
+
+  26  condicion : expresion comparador expresion
+
+  27  expresion : expresion '+' termino
+  28            | expresion '-' termino
+  29            | termino
+  30            | DOUBLE '(' expresion ')'
+
+  31  termino : termino '*' factor
+  32          | termino '/' factor
+  33          | factor
+
+  34  factor : cte
+  35         | factor_negado
+  36         | IDE
+
+  37  cte : CTE_DOUBLE
+  38      | CTE_UINT
+
+  39  factor_negado : '-' CTE_DOUBLE
+
+  40  comparador : '<'
+  41             | '>'
+  42             | IGUAL_IGUAL
+  43             | MAYOR_IGUAL
+  44             | MENOR_IGUAL
+  45             | DISTINTO
+
+  46  inc_decr : UP
+  47           | DOWN
+
+  48  seleccion : IF '(' condicion ')' '{' bloque_sentencias '}' END_IF
+  49            | IF '(' condicion ')' '{' bloque_sentencias '}' ELSE '{' bloque_sentencias '}' END_IF
+
+  50  salida : OUT '(' CADENA ')'
+
+  51  asignacion : IDE '=' expresion
+
+  52  invocacion : IDE '(' parametros ')'
+
+  53  parametros : IDE ':' IDE
+  54             | parametros ',' IDE ':' IDE
+
+state 0
+	$accept : . programa $end  (0)
+
+	IDE  shift 1
+	IF  shift 2
+	OUT  shift 3
+	UINT  shift 4
+	DOUBLE  shift 5
+	FOR  shift 6
+	PROC  shift 7
+	'{'  shift 8
+	.  error
+
+	programa  goto 9
+	bloque  goto 10
+	sentencia  goto 11
+	declaracion  goto 12
+	ejecucion  goto 13
+	tipo  goto 14
+	procedimiento  goto 15
+	control  goto 16
+	seleccion  goto 17
+	salida  goto 18
+	asignacion  goto 19
+	invocacion  goto 20
+
+
+state 1
+	asignacion : IDE . '=' expresion  (51)
+	invocacion : IDE . '(' parametros ')'  (52)
+
+	'('  shift 21
+	'='  shift 22
+	.  error
+
+
+state 2
+	seleccion : IF . '(' condicion ')' '{' bloque_sentencias '}' END_IF  (48)
+	seleccion : IF . '(' condicion ')' '{' bloque_sentencias '}' ELSE '{' bloque_sentencias '}' END_IF  (49)
+
+	'('  shift 23
+	.  error
+
+
+state 3
+	salida : OUT . '(' CADENA ')'  (50)
+
+	'('  shift 24
+	.  error
+
+
+state 4
+	tipo : UINT .  (18)
+
+	.  reduce 18
+
+
+state 5
+	tipo : DOUBLE .  (19)
+
+	.  reduce 19
+
+
+state 6
+	control : FOR . '(' UINT '=' CTE_UINT ';' condicion ';' inc_decr CTE_UINT ')' '{' bloque_sentencias '}'  (25)
+
+	'('  shift 25
+	.  error
+
+
+state 7
+	procedimiento : PROC . IDE '(' lista_de_parametros ')' NI '=' CTE_UINT '{' bloque_sentencias '}'  (12)
+
+	IDE  shift 26
+	.  error
+
+
+state 8
+	bloque : '{' . bloque_sentencias '}'  (3)
+
+	IDE  shift 1
+	IF  shift 2
+	OUT  shift 3
+	UINT  shift 4
+	DOUBLE  shift 5
+	FOR  shift 6
+	PROC  shift 7
+	.  error
+
+	sentencia  goto 27
+	bloque_sentencias  goto 28
+	declaracion  goto 12
+	ejecucion  goto 13
+	tipo  goto 14
+	procedimiento  goto 15
+	control  goto 16
+	seleccion  goto 17
+	salida  goto 18
+	asignacion  goto 19
+	invocacion  goto 20
+
+
+state 9
+	$accept : programa . $end  (0)
+
+	$end  accept
+
+
+state 10
+	programa : bloque .  (1)
+
+	.  reduce 1
+
+
+state 11
+	bloque : sentencia .  (2)
+
+	.  reduce 2
+
+
+state 12
+	sentencia : declaracion . ';'  (6)
+
+	';'  shift 29
+	.  error
+
+
+state 13
+	sentencia : ejecucion . ';'  (7)
+
+	';'  shift 30
+	.  error
+
+
+state 14
+	declaracion : tipo . lista_de_variables  (8)
+
+	IDE  shift 31
+	.  error
+
+	lista_de_variables  goto 32
+
+
+state 15
+	declaracion : procedimiento .  (9)
+
+	.  reduce 9
+
+
+state 16
+	ejecucion : control .  (20)
+
+	.  reduce 20
+
+
+state 17
+	ejecucion : seleccion .  (21)
+
+	.  reduce 21
+
+
+state 18
+	ejecucion : salida .  (22)
+
+	.  reduce 22
+
+
+state 19
+	ejecucion : asignacion .  (23)
+
+	.  reduce 23
+
+
+state 20
+	ejecucion : invocacion .  (24)
+
+	.  reduce 24
+
+
+state 21
+	invocacion : IDE '(' . parametros ')'  (52)
+
+	IDE  shift 33
+	.  error
+
+	parametros  goto 34
+
+
+state 22
+	asignacion : IDE '=' . expresion  (51)
+
+	IDE  shift 35
+	CTE_UINT  shift 36
+	CTE_DOUBLE  shift 37
+	DOUBLE  shift 38
+	'-'  shift 39
+	.  error
+
+	expresion  goto 40
+	termino  goto 41
+	factor  goto 42
+	cte  goto 43
+	factor_negado  goto 44
+
+
+state 23
+	seleccion : IF '(' . condicion ')' '{' bloque_sentencias '}' END_IF  (48)
+	seleccion : IF '(' . condicion ')' '{' bloque_sentencias '}' ELSE '{' bloque_sentencias '}' END_IF  (49)
+
+	IDE  shift 35
+	CTE_UINT  shift 36
+	CTE_DOUBLE  shift 37
+	DOUBLE  shift 38
+	'-'  shift 39
+	.  error
+
+	condicion  goto 45
+	expresion  goto 46
+	termino  goto 41
+	factor  goto 42
+	cte  goto 43
+	factor_negado  goto 44
+
+
+state 24
+	salida : OUT '(' . CADENA ')'  (50)
+
+	CADENA  shift 47
+	.  error
+
+
+state 25
+	control : FOR '(' . UINT '=' CTE_UINT ';' condicion ';' inc_decr CTE_UINT ')' '{' bloque_sentencias '}'  (25)
+
+	UINT  shift 48
+	.  error
+
+
+state 26
+	procedimiento : PROC IDE . '(' lista_de_parametros ')' NI '=' CTE_UINT '{' bloque_sentencias '}'  (12)
+
+	'('  shift 49
+	.  error
+
+
+state 27
+	bloque_sentencias : sentencia .  (4)
+
+	.  reduce 4
+
+
+state 28
+	bloque : '{' bloque_sentencias . '}'  (3)
+	bloque_sentencias : bloque_sentencias . sentencia  (5)
+
+	IDE  shift 1
+	IF  shift 2
+	OUT  shift 3
+	UINT  shift 4
+	DOUBLE  shift 5
+	FOR  shift 6
+	PROC  shift 7
+	'}'  shift 50
+	.  error
+
+	sentencia  goto 51
+	declaracion  goto 12
+	ejecucion  goto 13
+	tipo  goto 14
+	procedimiento  goto 15
+	control  goto 16
+	seleccion  goto 17
+	salida  goto 18
+	asignacion  goto 19
+	invocacion  goto 20
+
+
+state 29
+	sentencia : declaracion ';' .  (6)
+
+	.  reduce 6
+
+
+state 30
+	sentencia : ejecucion ';' .  (7)
+
+	.  reduce 7
+
+
+state 31
+	lista_de_variables : IDE .  (11)
+
+	.  reduce 11
+
+
+state 32
+	declaracion : tipo lista_de_variables .  (8)
+	lista_de_variables : lista_de_variables . ',' IDE  (10)
+
+	','  shift 52
+	';'  reduce 8
+
+
+state 33
+	parametros : IDE . ':' IDE  (53)
+
+	':'  shift 53
+	.  error
+
+
+state 34
+	invocacion : IDE '(' parametros . ')'  (52)
+	parametros : parametros . ',' IDE ':' IDE  (54)
+
+	','  shift 54
+	')'  shift 55
+	.  error
+
+
+state 35
+	factor : IDE .  (36)
+
+	.  reduce 36
+
+
+state 36
+	cte : CTE_UINT .  (38)
+
+	.  reduce 38
+
+
+state 37
+	cte : CTE_DOUBLE .  (37)
+
+	.  reduce 37
+
+
+state 38
+	expresion : DOUBLE . '(' expresion ')'  (30)
+
+	'('  shift 56
+	.  error
+
+
+state 39
+	factor_negado : '-' . CTE_DOUBLE  (39)
+
+	CTE_DOUBLE  shift 57
+	.  error
+
+
+state 40
+	expresion : expresion . '+' termino  (27)
+	expresion : expresion . '-' termino  (28)
+	asignacion : IDE '=' expresion .  (51)
+
+	'+'  shift 58
+	'-'  shift 59
+	';'  reduce 51
+
+
+state 41
+	expresion : termino .  (29)
+	termino : termino . '*' factor  (31)
+	termino : termino . '/' factor  (32)
+
+	'*'  shift 60
+	'/'  shift 61
+	MAYOR_IGUAL  reduce 29
+	MENOR_IGUAL  reduce 29
+	IGUAL_IGUAL  reduce 29
+	DISTINTO  reduce 29
+	';'  reduce 29
+	')'  reduce 29
+	'+'  reduce 29
+	'-'  reduce 29
+	'<'  reduce 29
+	'>'  reduce 29
+
+
+state 42
+	termino : factor .  (33)
+
+	.  reduce 33
+
+
+state 43
+	factor : cte .  (34)
+
+	.  reduce 34
+
+
+state 44
+	factor : factor_negado .  (35)
+
+	.  reduce 35
+
+
+state 45
+	seleccion : IF '(' condicion . ')' '{' bloque_sentencias '}' END_IF  (48)
+	seleccion : IF '(' condicion . ')' '{' bloque_sentencias '}' ELSE '{' bloque_sentencias '}' END_IF  (49)
+
+	')'  shift 62
+	.  error
+
+
+state 46
+	condicion : expresion . comparador expresion  (26)
+	expresion : expresion . '+' termino  (27)
+	expresion : expresion . '-' termino  (28)
+
+	MAYOR_IGUAL  shift 63
+	MENOR_IGUAL  shift 64
+	IGUAL_IGUAL  shift 65
+	DISTINTO  shift 66
+	'+'  shift 58
+	'-'  shift 59
+	'<'  shift 67
+	'>'  shift 68
+	.  error
+
+	comparador  goto 69
+
+
+state 47
+	salida : OUT '(' CADENA . ')'  (50)
+
+	')'  shift 70
+	.  error
+
+
+state 48
+	control : FOR '(' UINT . '=' CTE_UINT ';' condicion ';' inc_decr CTE_UINT ')' '{' bloque_sentencias '}'  (25)
+
+	'='  shift 71
+	.  error
+
+
+state 49
+	procedimiento : PROC IDE '(' . lista_de_parametros ')' NI '=' CTE_UINT '{' bloque_sentencias '}'  (12)
+
+	UINT  shift 4
+	DOUBLE  shift 5
+	REF  shift 72
+	.  error
+
+	tipo  goto 73
+	lista_de_parametros  goto 74
+	param  goto 75
+
+
+state 50
+	bloque : '{' bloque_sentencias '}' .  (3)
+
+	.  reduce 3
+
+
+state 51
+	bloque_sentencias : bloque_sentencias sentencia .  (5)
+
+	.  reduce 5
+
+
+state 52
+	lista_de_variables : lista_de_variables ',' . IDE  (10)
+
+	IDE  shift 76
+	.  error
+
+
+state 53
+	parametros : IDE ':' . IDE  (53)
+
+	IDE  shift 77
+	.  error
+
+
+state 54
+	parametros : parametros ',' . IDE ':' IDE  (54)
+
+	IDE  shift 78
+	.  error
+
+
+state 55
+	invocacion : IDE '(' parametros ')' .  (52)
+
+	.  reduce 52
+
+
+state 56
+	expresion : DOUBLE '(' . expresion ')'  (30)
+
+	IDE  shift 35
+	CTE_UINT  shift 36
+	CTE_DOUBLE  shift 37
+	DOUBLE  shift 38
+	'-'  shift 39
+	.  error
+
+	expresion  goto 79
+	termino  goto 41
+	factor  goto 42
+	cte  goto 43
+	factor_negado  goto 44
+
+
+state 57
+	factor_negado : '-' CTE_DOUBLE .  (39)
+
+	.  reduce 39
+
+
+state 58
+	expresion : expresion '+' . termino  (27)
+
+	IDE  shift 35
+	CTE_UINT  shift 36
+	CTE_DOUBLE  shift 37
+	'-'  shift 39
+	.  error
+
+	termino  goto 80
+	factor  goto 42
+	cte  goto 43
+	factor_negado  goto 44
+
+
+state 59
+	expresion : expresion '-' . termino  (28)
+
+	IDE  shift 35
+	CTE_UINT  shift 36
+	CTE_DOUBLE  shift 37
+	'-'  shift 39
+	.  error
+
+	termino  goto 81
+	factor  goto 42
+	cte  goto 43
+	factor_negado  goto 44
+
+
+state 60
+	termino : termino '*' . factor  (31)
+
+	IDE  shift 35
+	CTE_UINT  shift 36
+	CTE_DOUBLE  shift 37
+	'-'  shift 39
+	.  error
+
+	factor  goto 82
+	cte  goto 43
+	factor_negado  goto 44
+
+
+state 61
+	termino : termino '/' . factor  (32)
+
+	IDE  shift 35
+	CTE_UINT  shift 36
+	CTE_DOUBLE  shift 37
+	'-'  shift 39
+	.  error
+
+	factor  goto 83
+	cte  goto 43
+	factor_negado  goto 44
+
+
+state 62
+	seleccion : IF '(' condicion ')' . '{' bloque_sentencias '}' END_IF  (48)
+	seleccion : IF '(' condicion ')' . '{' bloque_sentencias '}' ELSE '{' bloque_sentencias '}' END_IF  (49)
+
+	'{'  shift 84
+	.  error
+
+
+state 63
+	comparador : MAYOR_IGUAL .  (43)
+
+	.  reduce 43
+
+
+state 64
+	comparador : MENOR_IGUAL .  (44)
+
+	.  reduce 44
+
+
+state 65
+	comparador : IGUAL_IGUAL .  (42)
+
+	.  reduce 42
+
+
+state 66
+	comparador : DISTINTO .  (45)
+
+	.  reduce 45
+
+
+state 67
+	comparador : '<' .  (40)
+
+	.  reduce 40
+
+
+state 68
+	comparador : '>' .  (41)
+
+	.  reduce 41
+
+
+state 69
+	condicion : expresion comparador . expresion  (26)
+
+	IDE  shift 35
+	CTE_UINT  shift 36
+	CTE_DOUBLE  shift 37
+	DOUBLE  shift 38
+	'-'  shift 39
+	.  error
+
+	expresion  goto 85
+	termino  goto 41
+	factor  goto 42
+	cte  goto 43
+	factor_negado  goto 44
+
+
+state 70
+	salida : OUT '(' CADENA ')' .  (50)
+
+	.  reduce 50
+
+
+state 71
+	control : FOR '(' UINT '=' . CTE_UINT ';' condicion ';' inc_decr CTE_UINT ')' '{' bloque_sentencias '}'  (25)
+
+	CTE_UINT  shift 86
+	.  error
+
+
+state 72
+	param : REF . tipo IDE  (17)
+
+	UINT  shift 4
+	DOUBLE  shift 5
+	.  error
+
+	tipo  goto 87
+
+
+state 73
+	param : tipo . IDE  (16)
+
+	IDE  shift 88
+	.  error
+
+
+state 74
+	procedimiento : PROC IDE '(' lista_de_parametros . ')' NI '=' CTE_UINT '{' bloque_sentencias '}'  (12)
+
+	')'  shift 89
+	.  error
+
+
+state 75
+	lista_de_parametros : param .  (13)
+	lista_de_parametros : param . ',' param  (14)
+	lista_de_parametros : param . ',' param ',' param  (15)
+
+	','  shift 90
+	')'  reduce 13
+
+
+state 76
+	lista_de_variables : lista_de_variables ',' IDE .  (10)
+
+	.  reduce 10
+
+
+state 77
+	parametros : IDE ':' IDE .  (53)
+
+	.  reduce 53
+
+
+state 78
+	parametros : parametros ',' IDE . ':' IDE  (54)
+
+	':'  shift 91
+	.  error
+
+
+state 79
+	expresion : expresion . '+' termino  (27)
+	expresion : expresion . '-' termino  (28)
+	expresion : DOUBLE '(' expresion . ')'  (30)
+
+	')'  shift 92
+	'+'  shift 58
+	'-'  shift 59
+	.  error
+
+
+state 80
+	expresion : expresion '+' termino .  (27)
+	termino : termino . '*' factor  (31)
+	termino : termino . '/' factor  (32)
+
+	'*'  shift 60
+	'/'  shift 61
+	MAYOR_IGUAL  reduce 27
+	MENOR_IGUAL  reduce 27
+	IGUAL_IGUAL  reduce 27
+	DISTINTO  reduce 27
+	';'  reduce 27
+	')'  reduce 27
+	'+'  reduce 27
+	'-'  reduce 27
+	'<'  reduce 27
+	'>'  reduce 27
+
+
+state 81
+	expresion : expresion '-' termino .  (28)
+	termino : termino . '*' factor  (31)
+	termino : termino . '/' factor  (32)
+
+	'*'  shift 60
+	'/'  shift 61
+	MAYOR_IGUAL  reduce 28
+	MENOR_IGUAL  reduce 28
+	IGUAL_IGUAL  reduce 28
+	DISTINTO  reduce 28
+	';'  reduce 28
+	')'  reduce 28
+	'+'  reduce 28
+	'-'  reduce 28
+	'<'  reduce 28
+	'>'  reduce 28
+
+
+state 82
+	termino : termino '*' factor .  (31)
+
+	.  reduce 31
+
+
+state 83
+	termino : termino '/' factor .  (32)
+
+	.  reduce 32
+
+
+state 84
+	seleccion : IF '(' condicion ')' '{' . bloque_sentencias '}' END_IF  (48)
+	seleccion : IF '(' condicion ')' '{' . bloque_sentencias '}' ELSE '{' bloque_sentencias '}' END_IF  (49)
+
+	IDE  shift 1
+	IF  shift 2
+	OUT  shift 3
+	UINT  shift 4
+	DOUBLE  shift 5
+	FOR  shift 6
+	PROC  shift 7
+	.  error
+
+	sentencia  goto 27
+	bloque_sentencias  goto 93
+	declaracion  goto 12
+	ejecucion  goto 13
+	tipo  goto 14
+	procedimiento  goto 15
+	control  goto 16
+	seleccion  goto 17
+	salida  goto 18
+	asignacion  goto 19
+	invocacion  goto 20
+
+
+state 85
+	condicion : expresion comparador expresion .  (26)
+	expresion : expresion . '+' termino  (27)
+	expresion : expresion . '-' termino  (28)
+
+	'+'  shift 58
+	'-'  shift 59
+	';'  reduce 26
+	')'  reduce 26
+
+
+state 86
+	control : FOR '(' UINT '=' CTE_UINT . ';' condicion ';' inc_decr CTE_UINT ')' '{' bloque_sentencias '}'  (25)
+
+	';'  shift 94
+	.  error
+
+
+state 87
+	param : REF tipo . IDE  (17)
+
+	IDE  shift 95
+	.  error
+
+
+state 88
+	param : tipo IDE .  (16)
+
+	.  reduce 16
+
+
+state 89
+	procedimiento : PROC IDE '(' lista_de_parametros ')' . NI '=' CTE_UINT '{' bloque_sentencias '}'  (12)
+
+	NI  shift 96
+	.  error
+
+
+state 90
+	lista_de_parametros : param ',' . param  (14)
+	lista_de_parametros : param ',' . param ',' param  (15)
+
+	UINT  shift 4
+	DOUBLE  shift 5
+	REF  shift 72
+	.  error
+
+	tipo  goto 73
+	param  goto 97
+
+
+state 91
+	parametros : parametros ',' IDE ':' . IDE  (54)
+
+	IDE  shift 98
+	.  error
+
+
+state 92
+	expresion : DOUBLE '(' expresion ')' .  (30)
+
+	.  reduce 30
+
+
+state 93
+	bloque_sentencias : bloque_sentencias . sentencia  (5)
+	seleccion : IF '(' condicion ')' '{' bloque_sentencias . '}' END_IF  (48)
+	seleccion : IF '(' condicion ')' '{' bloque_sentencias . '}' ELSE '{' bloque_sentencias '}' END_IF  (49)
+
+	IDE  shift 1
+	IF  shift 2
+	OUT  shift 3
+	UINT  shift 4
+	DOUBLE  shift 5
+	FOR  shift 6
+	PROC  shift 7
+	'}'  shift 99
+	.  error
+
+	sentencia  goto 51
+	declaracion  goto 12
+	ejecucion  goto 13
+	tipo  goto 14
+	procedimiento  goto 15
+	control  goto 16
+	seleccion  goto 17
+	salida  goto 18
+	asignacion  goto 19
+	invocacion  goto 20
+
+
+state 94
+	control : FOR '(' UINT '=' CTE_UINT ';' . condicion ';' inc_decr CTE_UINT ')' '{' bloque_sentencias '}'  (25)
+
+	IDE  shift 35
+	CTE_UINT  shift 36
+	CTE_DOUBLE  shift 37
+	DOUBLE  shift 38
+	'-'  shift 39
+	.  error
+
+	condicion  goto 100
+	expresion  goto 46
+	termino  goto 41
+	factor  goto 42
+	cte  goto 43
+	factor_negado  goto 44
+
+
+state 95
+	param : REF tipo IDE .  (17)
+
+	.  reduce 17
+
+
+state 96
+	procedimiento : PROC IDE '(' lista_de_parametros ')' NI . '=' CTE_UINT '{' bloque_sentencias '}'  (12)
+
+	'='  shift 101
+	.  error
+
+
+state 97
+	lista_de_parametros : param ',' param .  (14)
+	lista_de_parametros : param ',' param . ',' param  (15)
+
+	','  shift 102
+	')'  reduce 14
+
+
+state 98
+	parametros : parametros ',' IDE ':' IDE .  (54)
+
+	.  reduce 54
+
+
+state 99
+	seleccion : IF '(' condicion ')' '{' bloque_sentencias '}' . END_IF  (48)
+	seleccion : IF '(' condicion ')' '{' bloque_sentencias '}' . ELSE '{' bloque_sentencias '}' END_IF  (49)
+
+	ELSE  shift 103
+	END_IF  shift 104
+	.  error
+
+
+state 100
+	control : FOR '(' UINT '=' CTE_UINT ';' condicion . ';' inc_decr CTE_UINT ')' '{' bloque_sentencias '}'  (25)
+
+	';'  shift 105
+	.  error
+
+
+state 101
+	procedimiento : PROC IDE '(' lista_de_parametros ')' NI '=' . CTE_UINT '{' bloque_sentencias '}'  (12)
+
+	CTE_UINT  shift 106
+	.  error
+
+
+state 102
+	lista_de_parametros : param ',' param ',' . param  (15)
+
+	UINT  shift 4
+	DOUBLE  shift 5
+	REF  shift 72
+	.  error
+
+	tipo  goto 73
+	param  goto 107
+
+
+state 103
+	seleccion : IF '(' condicion ')' '{' bloque_sentencias '}' ELSE . '{' bloque_sentencias '}' END_IF  (49)
+
+	'{'  shift 108
+	.  error
+
+
+state 104
+	seleccion : IF '(' condicion ')' '{' bloque_sentencias '}' END_IF .  (48)
+
+	.  reduce 48
+
+
+state 105
+	control : FOR '(' UINT '=' CTE_UINT ';' condicion ';' . inc_decr CTE_UINT ')' '{' bloque_sentencias '}'  (25)
+
+	UP  shift 109
+	DOWN  shift 110
+	.  error
+
+	inc_decr  goto 111
+
+
+state 106
+	procedimiento : PROC IDE '(' lista_de_parametros ')' NI '=' CTE_UINT . '{' bloque_sentencias '}'  (12)
+
+	'{'  shift 112
+	.  error
+
+
+state 107
+	lista_de_parametros : param ',' param ',' param .  (15)
+
+	.  reduce 15
+
+
+state 108
+	seleccion : IF '(' condicion ')' '{' bloque_sentencias '}' ELSE '{' . bloque_sentencias '}' END_IF  (49)
+
+	IDE  shift 1
+	IF  shift 2
+	OUT  shift 3
+	UINT  shift 4
+	DOUBLE  shift 5
+	FOR  shift 6
+	PROC  shift 7
+	.  error
+
+	sentencia  goto 27
+	bloque_sentencias  goto 113
+	declaracion  goto 12
+	ejecucion  goto 13
+	tipo  goto 14
+	procedimiento  goto 15
+	control  goto 16
+	seleccion  goto 17
+	salida  goto 18
+	asignacion  goto 19
+	invocacion  goto 20
+
+
+state 109
+	inc_decr : UP .  (46)
+
+	.  reduce 46
+
+
+state 110
+	inc_decr : DOWN .  (47)
+
+	.  reduce 47
+
+
+state 111
+	control : FOR '(' UINT '=' CTE_UINT ';' condicion ';' inc_decr . CTE_UINT ')' '{' bloque_sentencias '}'  (25)
+
+	CTE_UINT  shift 114
+	.  error
+
+
+state 112
+	procedimiento : PROC IDE '(' lista_de_parametros ')' NI '=' CTE_UINT '{' . bloque_sentencias '}'  (12)
+
+	IDE  shift 1
+	IF  shift 2
+	OUT  shift 3
+	UINT  shift 4
+	DOUBLE  shift 5
+	FOR  shift 6
+	PROC  shift 7
+	.  error
+
+	sentencia  goto 27
+	bloque_sentencias  goto 115
+	declaracion  goto 12
+	ejecucion  goto 13
+	tipo  goto 14
+	procedimiento  goto 15
+	control  goto 16
+	seleccion  goto 17
+	salida  goto 18
+	asignacion  goto 19
+	invocacion  goto 20
+
+
+state 113
+	bloque_sentencias : bloque_sentencias . sentencia  (5)
+	seleccion : IF '(' condicion ')' '{' bloque_sentencias '}' ELSE '{' bloque_sentencias . '}' END_IF  (49)
+
+	IDE  shift 1
+	IF  shift 2
+	OUT  shift 3
+	UINT  shift 4
+	DOUBLE  shift 5
+	FOR  shift 6
+	PROC  shift 7
+	'}'  shift 116
+	.  error
+
+	sentencia  goto 51
+	declaracion  goto 12
+	ejecucion  goto 13
+	tipo  goto 14
+	procedimiento  goto 15
+	control  goto 16
+	seleccion  goto 17
+	salida  goto 18
+	asignacion  goto 19
+	invocacion  goto 20
+
+
+state 114
+	control : FOR '(' UINT '=' CTE_UINT ';' condicion ';' inc_decr CTE_UINT . ')' '{' bloque_sentencias '}'  (25)
+
+	')'  shift 117
+	.  error
+
+
+state 115
+	bloque_sentencias : bloque_sentencias . sentencia  (5)
+	procedimiento : PROC IDE '(' lista_de_parametros ')' NI '=' CTE_UINT '{' bloque_sentencias . '}'  (12)
+
+	IDE  shift 1
+	IF  shift 2
+	OUT  shift 3
+	UINT  shift 4
+	DOUBLE  shift 5
+	FOR  shift 6
+	PROC  shift 7
+	'}'  shift 118
+	.  error
+
+	sentencia  goto 51
+	declaracion  goto 12
+	ejecucion  goto 13
+	tipo  goto 14
+	procedimiento  goto 15
+	control  goto 16
+	seleccion  goto 17
+	salida  goto 18
+	asignacion  goto 19
+	invocacion  goto 20
+
+
+state 116
+	seleccion : IF '(' condicion ')' '{' bloque_sentencias '}' ELSE '{' bloque_sentencias '}' . END_IF  (49)
+
+	END_IF  shift 119
+	.  error
+
+
+state 117
+	control : FOR '(' UINT '=' CTE_UINT ';' condicion ';' inc_decr CTE_UINT ')' . '{' bloque_sentencias '}'  (25)
+
+	'{'  shift 120
+	.  error
+
+
+state 118
+	procedimiento : PROC IDE '(' lista_de_parametros ')' NI '=' CTE_UINT '{' bloque_sentencias '}' .  (12)
+
+	.  reduce 12
+
+
+state 119
+	seleccion : IF '(' condicion ')' '{' bloque_sentencias '}' ELSE '{' bloque_sentencias '}' END_IF .  (49)
+
+	.  reduce 49
+
+
+state 120
+	control : FOR '(' UINT '=' CTE_UINT ';' condicion ';' inc_decr CTE_UINT ')' '{' . bloque_sentencias '}'  (25)
+
+	IDE  shift 1
+	IF  shift 2
+	OUT  shift 3
+	UINT  shift 4
+	DOUBLE  shift 5
+	FOR  shift 6
+	PROC  shift 7
+	.  error
+
+	sentencia  goto 27
+	bloque_sentencias  goto 121
+	declaracion  goto 12
+	ejecucion  goto 13
+	tipo  goto 14
+	procedimiento  goto 15
+	control  goto 16
+	seleccion  goto 17
+	salida  goto 18
+	asignacion  goto 19
+	invocacion  goto 20
+
+
+state 121
+	bloque_sentencias : bloque_sentencias . sentencia  (5)
+	control : FOR '(' UINT '=' CTE_UINT ';' condicion ';' inc_decr CTE_UINT ')' '{' bloque_sentencias . '}'  (25)
+
+	IDE  shift 1
+	IF  shift 2
+	OUT  shift 3
+	UINT  shift 4
+	DOUBLE  shift 5
+	FOR  shift 6
+	PROC  shift 7
+	'}'  shift 122
+	.  error
+
+	sentencia  goto 51
+	declaracion  goto 12
+	ejecucion  goto 13
+	tipo  goto 14
+	procedimiento  goto 15
+	control  goto 16
+	seleccion  goto 17
+	salida  goto 18
+	asignacion  goto 19
+	invocacion  goto 20
+
+
+state 122
+	control : FOR '(' UINT '=' CTE_UINT ';' condicion ';' inc_decr CTE_UINT ')' '{' bloque_sentencias '}' .  (25)
+
+	.  reduce 25
+
+
+39 terminals, 26 nonterminals
+55 grammar rules, 123 states

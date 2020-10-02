@@ -1,6 +1,7 @@
 package main;
 
 import java.io.*;
+import Parser.*;
 
 public class Main{
 
@@ -51,7 +52,10 @@ public class Main{
 
         Lexico l1 = new Lexico(codigo);
 
-        Token token = l1.getToken();
+        Parser p = new Parser(l1);
+        p.run();
+
+     /*  Token token = l1.getToken();
         if (token != null){
             System.out.println(token.getId());
             System.out.println(token.getLexema());
