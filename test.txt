@@ -1,1 +1,2 @@
-UINT a = 2;
+{UINT a;
+a=3_ui;}

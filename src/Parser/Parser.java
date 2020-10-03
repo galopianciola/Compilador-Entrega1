@@ -1,4 +1,4 @@
-package Parser;//### This file created by BYACC 1.8(/Java extension  1.15)
+//### This file created by BYACC 1.8(/Java extension  1.15)
 //### Java capabilities added 7 Jan 97, Bob Jamison
 //### Updated : 27 Nov 97  -- Bob Jamison, Joe Nieten
 //###           01 Jan 98  -- Bob Jamison -- fixed generic semantic constructor
@@ -17,8 +17,9 @@ package Parser;//### This file created by BYACC 1.8(/Java extension  1.15)
 
 
 //#line 2 "calc.y"
+package Parser;
 import main.*;
-//#line 19 "Parser.java"
+//#line 20 "Parser.java"
 
 
 
@@ -395,7 +396,7 @@ final static String yyrule[] = {
 "parametros : parametros ',' IDE ':' IDE",
 };
 
-//#line 117 "calc.y"
+//#line 118 "calc.y"
 
 private Lexico lexico;
 public Parser(Lexico lexico)
@@ -416,7 +417,7 @@ public int yylex(){
 public void yyerror(String s){
     System.out.println("Parser: " + s);
 }
-//#line 348 "Parser.java"
+//#line 349 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -570,6 +571,91 @@ boolean doaction;
     switch(yyn)
       {
 //########## USER-SUPPLIED ACTIONS ##########
+case 2:
+//#line 15 "calc.y"
+{System.out.println("se cargo una sentencia");}
+break;
+case 6:
+//#line 23 "calc.y"
+{System.out.println("Se cargo una lista de variables");}
+break;
+case 8:
+//#line 27 "calc.y"
+{System.out.println("llegue a una declaracion");}
+break;
+case 11:
+//#line 33 "calc.y"
+{System.out.println("lei un ID");}
+break;
+case 12:
+//#line 36 "calc.y"
+{System.out.println("se declaro una PROC");}
+break;
+case 18:
+//#line 48 "calc.y"
+{ System.out.println("lei un UINT");}
+break;
+case 19:
+//#line 49 "calc.y"
+{ System.out.println("lei un DOUBLE");}
+break;
+case 25:
+//#line 59 "calc.y"
+{ System.out.println("lei un FOR");}
+break;
+case 27:
+//#line 65 "calc.y"
+{ System.out.println("se realizo una suma");}
+break;
+case 28:
+//#line 66 "calc.y"
+{ System.out.println("se realizo una resta");}
+break;
+case 30:
+//#line 68 "calc.y"
+{ System.out.println("se realizo una conversion");}
+break;
+case 31:
+//#line 71 "calc.y"
+{ System.out.println("se realizo una multiplicacion");}
+break;
+case 32:
+//#line 72 "calc.y"
+{ System.out.println("se realizo una division");}
+break;
+case 36:
+//#line 78 "calc.y"
+{System.out.println("lei un identificador");}
+break;
+case 37:
+//#line 81 "calc.y"
+{System.out.println("lei una cte double");}
+break;
+case 38:
+//#line 82 "calc.y"
+{System.out.println("lei una cte uint");}
+break;
+case 48:
+//#line 100 "calc.y"
+{System.out.println("lei un IF");}
+break;
+case 49:
+//#line 101 "calc.y"
+{System.out.println("lei un IF con ELSE");}
+break;
+case 50:
+//#line 104 "calc.y"
+{System.out.println("realice un OUT");}
+break;
+case 51:
+//#line 107 "calc.y"
+{System.out.println("realice una asignacion");}
+break;
+case 52:
+//#line 110 "calc.y"
+{System.out.println("realice una invocacion a una funcion");}
+break;
+//#line 582 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

@@ -163,7 +163,7 @@ public class Lexico {
 
                 estadoActual = transiciones[estadoActual][columna]; // transicion de estado siempre
                 //TODO:deberiamos preguntar si token no es null? por tema errores.
-                if (estadoActual == F)//si estoy en final (tengo un token listo para devolver)
+                if ((estadoActual == F) && (caracter != '$'))//si estoy en final (tengo un token listo para devolver)
                     return token;
                    /* if (caracter == '$') {
                         //return new Token('$');
@@ -180,7 +180,7 @@ public class Lexico {
             if (caracter == '\n')
                 linea++;
         }
-        return new Token('$');
+        return new Token(0); //Token = 0 de fin de archivo
     }
 
     private int getColumna(char caracter) {
