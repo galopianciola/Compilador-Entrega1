@@ -1,2 +1,1 @@
-{UINT a;
-a=3_ui;}
+IF ( a < DOUBLE(z+y) ) {DOUBLE c;} ELSE {DOUBLE a;}END_IF;

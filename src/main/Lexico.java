@@ -32,16 +32,14 @@ public class Lexico {
     public static final int ELSE = 267;
     public static final int END_IF = 268;
     public static final int OUT = 269;
-    public static final int FUNC = 270;
-    public static final int RETURN = 271;
-    public static final int UINT = 272;
-    public static final int DOUBLE = 273;
-    public static final int NI = 274;
-    public static final int REF = 276;
-    public final static int FOR = 277;
-    public final static int UP = 278;
-    public final static int DOWN = 279;
-    public final static int PROC = 280;
+    public static final int UINT = 270;
+    public static final int DOUBLE = 271;
+    public static final int NI = 272;
+    public static final int REF = 273;
+    public final static int FOR = 274;
+    public final static int UP = 275;
+    public final static int DOWN = 276;
+    public final static int PROC = 277;
 
 
     // ACCIONES SEMANTICAS
@@ -73,14 +71,14 @@ public class Lexico {
     private Error7 err7 = new Error7();
     private Error8 err8 = new Error8();
     private Error9 err9 = new Error9();
-    private Error11 err11= new Error11();
+    private Error11 err11 = new Error11();
     private Error12 err12 = new Error12();
 
     private int[][] transiciones = {
             //L  l  d  .  %  <  >  =  "  !  +  -  _  u  i  bt  d ot \n  $
             //0  1  2  3  4  5  6  7  8  9 10  11 12 13 14 15 16 17 18 19
             {1, 2, 3, 6, 11, 13, 14, 15, 17, 16, F, F, -1, 2, 2, 0, 2, F, 0, F},//0
-            {1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},//1
+            {1, F, F, F, F, F, F, F, F, F, F, F, 1, F, F, F, F, F, F, F},//1
             {F, 2, 2, F, F, F, F, F, F, F, F, F, 2, 2, 2, F, 2, F, F, F},//2
             {-1, -1, 3, 7, -1, -1, -1, -1, -1, -1, -1, -1, 4, -1, -1, -1, -1, -1, -1, F},//3
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 5, -1, -1, -1, -1, -1, F},//4
@@ -104,7 +102,7 @@ public class Lexico {
             // L    l    d    .    %    <    >    =    "    !    +    -    _   'u'  'i'  bl   'd'  ot   \n  $
             // 0    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18  19
             {as1, as1, as1, as1, null, null, null, null, as1, null, as7, as7, err1, as1, as1, null, as1, as7, null, null},//0
-            {as2, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3},//1
+            {as2, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as3, as2, as3, as3, as3, as3, as3, as3, as3},//1
             {as4, as2, as2, as4, as4, as4, as4, as4, as4, as4, as4, as4, as2, as2, as2, as4, as2, as4, as4, as4},//2
             {err2, err2, as2, as2, err2, err2, err2, err2, err2, err2, err2, err2, null, err2, err2, err2, err2, err2, err2},//3
             {err3, err3, err3, err3, err3, err3, err3, err3, err3, err3, err3, err3, err3, null, err3, err3, err3, err3, err3},//4
@@ -136,8 +134,6 @@ public class Lexico {
         palabrasReservadas.add("ELSE");
         palabrasReservadas.add("END_IF");
         palabrasReservadas.add("OUT");
-        palabrasReservadas.add("FUNC");
-        palabrasReservadas.add("RETURN");
         palabrasReservadas.add("UINT");
         palabrasReservadas.add("DOUBLE");
         palabrasReservadas.add("NI");
@@ -153,7 +149,7 @@ public class Lexico {
         int columna = -1;
         Token token = null;
 
-        while ((caracter != '$') && (cursor<codigoFuente.length())) { // mientras no llego al final del codigo
+        while ((caracter != '$') && (cursor < codigoFuente.length())) { // mientras no llego al final del codigo
             caracter = codigoFuente.charAt(cursor);
             cursor++;
             columna = getColumna(caracter);

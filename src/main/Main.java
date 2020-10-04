@@ -54,7 +54,7 @@ public class Main{
         Parser p = new Parser(l1);
         p.run();
 
-    /*   Token token = l1.getToken();
+        /*Token token = l1.getToken();
         if (token != null){
             System.out.println(token.getId());
             System.out.println(token.getLexema());
@@ -70,7 +70,7 @@ public class Main{
         }
         else
             System.out.println("token null");
-        Token token3 = l1.getToken();
+        /*Token token3 = l1.getToken();
         if (token3 != null){
             System.out.println(token3.getId());
             System.out.println(token3.getLexema());

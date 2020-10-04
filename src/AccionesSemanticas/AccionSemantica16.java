@@ -6,7 +6,7 @@ public class AccionSemantica16 extends AccionSemantica {
     //CADENA DE CARACTERES
     @Override
     public Token run() {
-        Lexico.cursor++;
+        //Lexico.cursor++;
         buffer = buffer + Lexico.caracter;
         buffer = buffer.replace("-", "");
         buffer = buffer.replace("\n", "");

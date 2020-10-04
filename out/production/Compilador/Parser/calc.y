@@ -3,8 +3,8 @@ package Parser;
 import main.*;
 %}
 
-%token IDE CTE_UINT MAYOR_IGUAL MENOR_IGUAL IGUAL_IGUAL DISTINTO CTE_DOUBLE CADENA IF THEN ELSE END_IF OUT FUNC RETURN UINT DOUBLE
-NI FOR REF FOR UP DOWN PROC
+%token IDE CTE_UINT MAYOR_IGUAL MENOR_IGUAL IGUAL_IGUAL DISTINTO CTE_DOUBLE CADENA IF THEN ELSE END_IF OUT UINT DOUBLE
+NI REF FOR UP DOWN PROC
 %start programa
 
 %%
@@ -12,7 +12,7 @@ NI FOR REF FOR UP DOWN PROC
 programa: bloque
         ;
 
-bloque : sentencia {System.out.println("[Parser | Linea " + Lexico.linea + "] se cargo una sentencia");}
+bloque : sentencia {System.out.println("[Parser | Linea " + Lexico.linea + "] se detectó una sentencia");}
        | '{'bloque_sentencias'}'
        ;
 
@@ -20,11 +20,11 @@ bloque_sentencias  :  sentencia
                    |  bloque_sentencias sentencia
                    ;
 
-sentencia  : declaracion ';' {System.out.println("[Parser | Linea " + Lexico.linea + "] Se cargo una lista de variables");}
+sentencia  : declaracion ';'
            | ejecucion   ';'
            ;
 
-declaracion  : tipo lista_de_variables {System.out.println("[Parser | Linea " + Lexico.linea + "] llegue a una declaracion");}
+declaracion  : tipo lista_de_variables {System.out.println("[Parser | Linea " + Lexico.linea + "] se detectó una declaracion");}
     	     | procedimiento
              ;
 
@@ -33,7 +33,7 @@ lista_de_variables : lista_de_variables ',' IDE
 		   | IDE {System.out.println("[Parser | Linea " + Lexico.linea + "] lei un ID");}
 	           ;
 
-procedimiento : PROC IDE '(' lista_de_parametros ')' NI '=' CTE_UINT '{' bloque_sentencias '}'  {System.out.println("[Parser | Linea " + Lexico.linea + "]se declaro una PROC");}
+procedimiento : PROC IDE'('lista_de_parametros')'NI'='CTE_UINT'{'bloque_sentencias'}'{System.out.println("[Parser | Linea " + Lexico.linea + "]se declaro una PROC");}
               ;
 
 lista_de_parametros : param
@@ -45,8 +45,8 @@ param : tipo IDE
       | REF tipo IDE
       ;
 
-tipo : UINT {System.out.println("[Parser | Linea " + Lexico.linea + "] lei un UINT");}
-     | DOUBLE {System.out.println("[Parser | Linea " + Lexico.linea + "] lei un DOUBLE");}
+tipo : UINT {System.out.println("[Parser | Linea " + Lexico.linea + "] lei un tipo UINT");}
+     | DOUBLE {System.out.println("[Parser | Linea " + Lexico.linea + "] lei un tipo DOUBLE");}
      ;
 
 ejecucion : control
@@ -56,7 +56,7 @@ ejecucion : control
 	  | invocacion
 	  ;
 
-control : FOR '(' UINT '=' CTE_UINT ';' condicion ';' inc_decr CTE_UINT ')' '{' bloque_sentencias '}' { System.out.println("[Parser | Linea " + Lexico.linea + "] lei un FOR");}
+control : FOR'('IDE'='CTE_UINT';'condicion';'inc_decr CTE_UINT')''{'bloque_sentencias'}'{ System.out.println("[Parser | Linea " + Lexico.linea + "] lei un FOR");}
 	;
 
 condicion :  expresion comparador expresion
@@ -75,11 +75,11 @@ termino : termino '*' factor { System.out.println("[Parser | Linea " + Lexico.li
 
 factor 	: cte
 	| factor_negado
-	| IDE {System.out.println("[Parser | Linea " + Lexico.linea + "] lei un identificador");}
+	| IDE {System.out.println("[Parser | Linea " + Lexico.linea + "] se leyó un identificador");}
         ;
 
-cte : CTE_DOUBLE {System.out.println("[Parser | Linea " + Lexico.linea + "] lei una cte double");}
-    | CTE_UINT {System.out.println("[Parser | Linea " + Lexico.linea + "] lei una cte uint");}
+cte : CTE_DOUBLE {System.out.println("[Parser | Linea " + Lexico.linea + "] se leyó una cte double");}
+    | CTE_UINT {System.out.println("[Parser | Linea " + Lexico.linea + "] se leyó una cte uint");}
     ;
 
 factor_negado : '-' CTE_DOUBLE
@@ -97,17 +97,17 @@ inc_decr : UP
 	 | DOWN
 	 ;
 
-seleccion : IF '(' condicion ')' '{' bloque_sentencias '}' END_IF {System.out.println("[Parser | Linea " + Lexico.linea + "] lei un IF");}
-	  | IF '(' condicion ')' '{' bloque_sentencias '}' ELSE '{' bloque_sentencias '}' END_IF {System.out.println("[Parser | Linea " + Lexico.linea + "] lei un IF con ELSE");}
+seleccion : IF '(' condicion ')' '{' bloque_sentencias '}' END_IF {System.out.println("[Parser | Linea " + Lexico.linea + "] se leyó un IF");}
+	  | IF '(' condicion ')' '{' bloque_sentencias '}' ELSE '{' bloque_sentencias '}' END_IF {System.out.println("[Parser | Linea " + Lexico.linea + "] se leyó un IF con ELSE");}
 	  ;
 
-salida : OUT '(' CADENA ')' {System.out.println("[Parser | Linea " + Lexico.linea + "] realice un OUT");}
+salida : OUT'('CADENA')'{System.out.println("[Parser | Linea " + Lexico.linea + "] se realizó un OUT");}
        ;
 
-asignacion : IDE '=' expresion {System.out.println("[Parser | Linea " + Lexico.linea + "] realice una asignacion");}
+asignacion : IDE '=' expresion {System.out.println("[Parser | Linea " + Lexico.linea + "] se realizó una asignacion");}
            ;
 
-invocacion : IDE '(' parametros ')' {System.out.println("[Parser | Linea " + Lexico.linea + "] realice una invocacion a una funcion");}
+invocacion : IDE '(' parametros ')' {System.out.println("[Parser | Linea " + Lexico.linea + "] se realizó una invocacion a una funcion");}
 	   ;
 
 parametros : IDE ':' IDE

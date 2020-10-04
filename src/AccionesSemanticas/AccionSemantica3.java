@@ -30,10 +30,6 @@ public class AccionSemantica3 extends AccionSemantica {
                 return Lexico.END_IF;
             case "OUT":
                 return Lexico.OUT;
-            case "FUNC":
-                return Lexico.FUNC;
-            case "RETURN":
-                return Lexico.RETURN;
             case "UINT":
                 return Lexico.UINT;
             case "DOUBLE":
@@ -49,7 +45,7 @@ public class AccionSemantica3 extends AccionSemantica {
             case "DOWN":
                 return Lexico.DOWN;
             case "PROC":
-                return Lexico.OUT;
+                return Lexico.PROC;
         }
         return 0;
     }
