@@ -18,6 +18,6 @@ public class AccionSemantica6 extends AccionSemantica {
             return new Token(Lexico.CTE_DOUBLE, buffer);
         }
 
-        return new Error9().run();
+        return new Error9().run(); // fuera de rango
     }
 }

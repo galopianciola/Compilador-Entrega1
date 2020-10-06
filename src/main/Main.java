@@ -41,16 +41,11 @@ public class Main{
 
         StringBuilder codigo = new StringBuilder(getCodigo(br));
 
-        int linea = 0;
-        for (int i = 0; i<codigo.length();i++){
-            if (codigo.charAt(i) == '\n')
-                linea++;
-        }
-        //System.out.println("cant lineas = " + linea);
-
         //-------------- ///// // /////// --------------
 
         Lexico l1 = new Lexico(codigo);
+
+        System.out.println("********* PARSER.RUN() *********");
         Parser p = new Parser(l1);
         p.run();
 

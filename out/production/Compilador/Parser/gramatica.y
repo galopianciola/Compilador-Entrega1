@@ -18,7 +18,7 @@ bloque : sentencia
        ;
 
 
-error_bloque : bloque_sentencias '}' {System.out.println("[Parser | Linea " + Lexico.linea + "] se detectó un bloque de sentencias mal declarado, falta '{'");}
+error_bloque : bloque_sentencias '}' {System.out.println("Error sináctico: Linea " + Lexico.linea + " se detectó un bloque de sentencias mal declarado, falta '{'");}
       	     | '{' bloque_sentencias  {System.out.println("[Parser | Linea " + Lexico.linea + "] se detectó un bloque de sentencias mal declarado, falta '}'");}
              ;
 
@@ -26,11 +26,11 @@ bloque_sentencias  :  sentencia
                    |  bloque_sentencias sentencia
                    ;
 
-sentencia  : declaracion{System.out.println("[Parser | Linea " + Lexico.linea + "] se detectó una sentencia declarativa");}
-           | ejecucion {System.out.println("[Parser | Linea " + Lexico.linea + "] se detectó una sentencia de ejecución");}
+sentencia  : declaracion
+           | ejecucion
            ;
 
-declaracion  : tipo lista_de_variables ';'{System.out.println("[Parser | Linea " + Lexico.linea + "] se detectó una declaracion");}
+declaracion  : tipo lista_de_variables ';'{System.out.println("[Parser | Linea " + Lexico.linea + "] se detectó una declaracion de variables");}
     	     | procedimiento';'
     	     | error_declaracion
              ;
@@ -39,7 +39,7 @@ error_declaracion : tipo lista_de_variables error {System.out.println("Error sin
            	  | procedimiento error{System.out.println("Error sintáctico: Linea " + Lexico.linea + " se detectó una sentencia mal declarada, falta ';'");}
            	  ;
 
-lista_de_variables : IDE {System.out.println("[Parser | Linea " + Lexico.linea + "] lei un ID");}
+lista_de_variables : IDE {System.out.println("[Parser | Linea " + Lexico.linea + "] se leyo el identificador -> " + $1.sval);}
       		   | lista_de_variables ',' IDE
       		   | error_lista_de_variables
                    ;
@@ -136,10 +136,6 @@ factor 	: CTE_DOUBLE {System.out.println("[Parser | Linea " + Lexico.linea + "] 
         | '-' factor {chequearFactorNegado();}
 	| IDE {System.out.println("[Parser | Linea " + Lexico.linea + "] se leyó un identificador");}
         ;
-
-/*factor_negado : '-' CTE_DOUBLE{chequearFactorNegado();}
-	      | '-' CTE_UINT{System.out.println("Error sintáctico: Linea " + Lexico.linea + " se detectó una constante UINT fuera de rango");}{Main.tSimbolos.eliminarSimbolo($2.sval);}
-              ;*/
 
 comparador : '<'
 	   | '>'

@@ -8,7 +8,7 @@ public class Error12 extends AccionSemantica {
 
     @Override
     public Token run() {
-        System.out.println("Error lexico en la linea " + Lexico.linea + ". La cadena no se cerro correctamente.");
+        System.out.println("Error léxico: Linea " + Lexico.linea + " la cadena no se cerro correctamente.");
         return null;
     }
 }
