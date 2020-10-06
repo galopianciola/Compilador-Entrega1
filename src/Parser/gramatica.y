@@ -227,7 +227,7 @@ public int yylex(){
    Token token = this.lexico.getToken();
    if(token != null ){
    	int val =token.getId();
-   	yyval = new ParserVal(token.getLexema());
+   	yylval = new ParserVal(token.getLexema());
    	return val;
    }
    return 0;
@@ -238,7 +238,7 @@ public void yyerror(String s){
 }
 
 public void chequearFactorNegado(){
-	String lexema = yyval.sval;
+	String lexema = yylval.sval;
 	int id = Main.tSimbolos.getId(lexema);
 	if(id == Lexico.CTE_UINT){
 		System.out.println("Error sintáctico: Linea " + Lexico.linea + " se detectó una constante UINT fuera de rango");
