@@ -1027,6 +1027,14 @@ case 40:
 //#line 76 "gramatica.y"
 {System.out.println("Error sintáctico: Linea " + Lexico.linea + " se detectaron parametros mal declarados, falta ','");}
 break;
+case 41:
+//#line 79 "gramatica.y"
+{System.out.println("[Parser | Linea " + Lexico.linea + "]se leyó el parametro -> " + val_peek(0).sval);}
+break;
+case 42:
+//#line 80 "gramatica.y"
+{System.out.println("[Parser | Linea " + Lexico.linea + "]se leyó el parametro -> " + val_peek(1).sval);}
+break;
 case 43:
 //#line 83 "gramatica.y"
 {System.out.println("[Parser | Linea " + Lexico.linea + "] se leyó un tipo UINT");}
@@ -1229,7 +1237,7 @@ case 112:
 break;
 case 113:
 //#line 184 "gramatica.y"
-{System.out.println("[Parser | Linea " + Lexico.linea + "] se realizó una asignación");}
+{System.out.println("[Parser | Linea " + Lexico.linea + "] se realizó una asignación al identificador -> " + val_peek(2).sval);}
 break;
 case 115:
 //#line 188 "gramatica.y"
@@ -1245,7 +1253,7 @@ case 117:
 break;
 case 118:
 //#line 194 "gramatica.y"
-{System.out.println("[Parser | Linea " + Lexico.linea + "] se realizó una invocacion a un procedimiento");}
+{System.out.println("[Parser | Linea " + Lexico.linea + "] se realizó una invocacion al procedimiento -> " + val_peek(3).sval );}
 break;
 case 120:
 //#line 198 "gramatica.y"
@@ -1263,6 +1271,14 @@ case 123:
 //#line 201 "gramatica.y"
 {System.out.println("Error sintáctico: Linea " + Lexico.linea + " se detectó una invocación mal declarada, falta el ')'");}
 break;
+case 124:
+//#line 204 "gramatica.y"
+{System.out.println("[Parser | Linea " + Lexico.linea + "] se leyeron los parámetros -> " + val_peek(2).sval +" y " +val_peek(0).sval);}
+break;
+case 125:
+//#line 205 "gramatica.y"
+{System.out.println("[Parser | Linea " + Lexico.linea + "] se leyeron los parámetros -> " + val_peek(2).sval +" y " +val_peek(0).sval);}
+break;
 case 127:
 //#line 209 "gramatica.y"
 {System.out.println("Error sintáctico: Linea " + Lexico.linea + " se detectaron parámetros mal declarados, falta el identificador de la izquierda");}
@@ -1279,7 +1295,7 @@ case 130:
 //#line 212 "gramatica.y"
 {System.out.println("Error sintáctico: Linea " + Lexico.linea + " se detectaron parámetros mal declarados, falta el identificador de la derecha");}
 break;
-//#line 1206 "Parser.java"
+//#line 1222 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

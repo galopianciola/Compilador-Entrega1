@@ -47,6 +47,7 @@ public class Main{
 
         StringBuilder codigo = new StringBuilder(getCodigo(br));
 
+        System.out.println("Contenido del archivo: " + codigo);
         //-------------- ///// // /////// --------------
 
         Lexico l1 = new Lexico(codigo);

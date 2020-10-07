@@ -76,8 +76,8 @@ error_lista_de_parametros : param ',' param ',' param ',' lista_de_parametros {S
 			  | param param ',' param {System.out.println("Error sintáctico: Linea " + Lexico.linea + " se detectaron parametros mal declarados, falta ','");}
 			  ;
 
-param : tipo IDE
-      | REF tipo IDE
+param : tipo IDE {System.out.println("[Parser | Linea " + Lexico.linea + "]se leyó el parametro -> " + $2.sval);}
+      | REF tipo IDE {System.out.println("[Parser | Linea " + Lexico.linea + "]se leyó el parametro -> " + $2.sval);}
       ;
 
 tipo : UINT {System.out.println("[Parser | Linea " + Lexico.linea + "] se leyó un tipo UINT");}
@@ -181,7 +181,7 @@ error_salida : OUT CADENA ')' {System.out.println("Error sintáctico: Linea " + 
 	     | OUT '(' ')' {System.out.println("Error sintáctico: Linea " + Lexico.linea + " se detectó un OUT mal declarado, falta la cadena entre los parentésis en el OUT");}
 	     ;
 
-asignacion : IDE '=' expresion {System.out.println("[Parser | Linea " + Lexico.linea + "] se realizó una asignación");}
+asignacion : IDE '=' expresion {System.out.println("[Parser | Linea " + Lexico.linea + "] se realizó una asignación al identificador -> " + $1.sval);}
 	   | error_asignacion
 	   ;
 
@@ -191,7 +191,7 @@ error_asignacion : IDE expresion {System.out.println("Error sintáctico: Linea "
 		 ;
 
 
-invocacion : IDE '(' parametros ')' {System.out.println("[Parser | Linea " + Lexico.linea + "] se realizó una invocacion a un procedimiento");}
+invocacion : IDE '(' parametros ')' {System.out.println("[Parser | Linea " + Lexico.linea + "] se realizó una invocacion al procedimiento -> " + $1.sval );}
 	   | error_invocacion
 	   ;
 
@@ -201,8 +201,8 @@ error_invocacion: '(' parametros ')' {System.out.println("Error sintáctico: Lin
 		| IDE'('parametros {System.out.println("Error sintáctico: Linea " + Lexico.linea + " se detectó una invocación mal declarada, falta el ')'");}
 		;
 
-parametros : IDE ':' IDE
-	   | parametros ',' IDE ':' IDE
+parametros : IDE ':' IDE {System.out.println("[Parser | Linea " + Lexico.linea + "] se leyeron los parámetros -> " + $1.sval +" y " +$3.sval);}
+	   | parametros ',' IDE ':' IDE  {System.out.println("[Parser | Linea " + Lexico.linea + "] se leyeron los parámetros -> " + $3.sval +" y " +$5.sval);}
 	   | error_parametros
 	   ;
 
