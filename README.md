@@ -1,2 +1,126 @@
-# Compilador
-para masita
+# Compilador grupo 13
+Para ejecutar correctamente los casos de prueba especificados para el programa, se deben seguir las siguientes instrucciones.
+
+Para el Lexico, usar la siguiente ruta:
+CasosDePrueba/Lexico/X
+cambiando 'X' por la prueba a ejecutar, teniendo X las siguientes posibilidades:
+
+- CadenaBienDefinida1.txt
+- CadenaBienDefinida2.txt
+- CadenaMalDefinida1.txt
+- CadenaMalDefinida2.txt
+- ComentarioBienDefinido.txt
+- ComentarioMalDefinido.txt
+- ComentarioSinSaltoDeLinea.txt
+- CteConElPrimerValorDentroDelRango.txt
+- CteConElPrimerValorFueraDelRango.txt
+- CteConElUltimoValorDentroDelRango.txt
+- CteConElUltimoValorFueraDelRango.txt
+- Double1.txt
+- Double2.txt
+- Double3.txt
+- Double4.txt
+- Double5.txt
+- Double6.txt
+- Double7FueraDeRango.txt
+- Double8FueraDeRango.txt
+- IdeCon_.txt
+- IdeDeMasDe20Caracteres.txt
+- IdeDeMenosDe20Caracteres.txt
+- IdeQueEmpiezaCon_.txt
+- PalabraReservadaMayuscula1.txt
+- PalabraReservadaEnMayuscula2.txt
+- PalabraReservadaEnMayusculaNoValida.txt
+- PalabraReservadaEnMinuscula.txt
+
+
+Para el Sintactico, usar la siguiente ruta:
+CasosDePrueba/Sintactico/X
+cambiando 'X' por la prueba a ejecutar, teniendo X las siguientes posibilidades:
+- Asignacion1.txt
+- Asignacion2.txt
+- Asignacion3.txt
+- Asignacion4.txt
+- Asignacion5.txt
+- Asignacion6.txt
+- AsignacionMalDefinida1.txt
+- AsignacionMalDefinida2.txt
+- AsignacionMalDefinida3.txt
+- AsignacionMalDefinida4.txt
+- AsignacionMalDefinida5.txt
+- Control1.txt
+- Control2.txt
+- ControlConConversion.txt
+- DeclarativaMalDefinida1.txt
+- DeclarativaMalDefinida2.txt
+- DeclarativaMalDefinida3.txt
+- Declarativas1.txt
+- Declarativas2.txt
+- Declarativas3.txt
+- FORMalDefinido1.txt
+- FORMalDefinido2.txt
+- FORMalDefinido3.txt
+- FORMalDefinido4.txt
+- FORMalDefinido5.txt
+- FORMalDefinido6.txt
+- FORMalDefinido7.txt
+- FORMalDefinido8.txt
+- FORMalDefinido9.txt
+- FORMalDefinido10.txt
+- FORMalDefinido11.txt
+- FORMalDefinido12.txt
+- FORMalDefinido13.txt
+- FORMalDefinido14.txt
+- IFELSEMalDefinido1.txt
+- IFELSEMalDefinido2.txt
+- IFELSEMalDefinido3.txt
+- IFELSEMalDefinido4.txt
+- IFELSEMalDefinido5.txt
+- IFELSEMalDefinido6.txt
+- IFMalDefinido1.txt
+- IFMalDefinido2.txt
+- IFMalDefinido3.txt
+- IFMalDefinido4.txt
+- IFMalDefinido5.txt
+- IFMalDefinido6.txt
+- IFMalDefinido7.txt
+- IFMalDefinido8.txt
+- Invocacion1.txt
+- Invocacion2.txt
+- Invocacion3.txt
+- InvocacionMalDefinida1.txt
+- InvocacionMalDefinida2.txt
+- InvocacionMalDefinida3.txt
+- InvocacionMalDefinida4.txt
+- InvocacionMalDefinida5.txt
+- InvocacionMalDefinida6.txt
+- InvocacionMalDefinida7.txt
+- InvocacionMalDefinida8.txt
+- InvocacionMalDefinida9.txt
+- ProcedimientosAnidados.txt
+- ProcMalDefinido1.txt
+- ProcMalDefinido2.txt
+- ProcMalDefinido3.txt
+- ProcMalDefinido4.txt
+- ProcMalDefinido5.txt
+- ProcMalDefinido6.txt
+- ProcMalDefinido7.txt
+- ProcMalDefinido8.txt
+- ProcMalDefinido9.txt
+- ProcMalDefinido10.txt
+- ProcMalDefinido11.txt
+- ProcMalDefinido12.txt
+- ProcMalDefinido13.txt
+- ProcMalDefinido14.txt
+- ProcMalDefinido15.txt
+- ProcMalDefinido16.txt
+- Salida1.txt
+- Salida2.txt
+- SalidaMalDefinida1.txt
+- SalidaMalDefinida2.txt
+- SalidaMalDefinida3.txt
+- SalidaMalDefinida4.txt
+- SalidaMalDefinida5.txt
+- SalidaMalDefinida6.txt
+- Seleccion1.txt
+- Seleccion2.txt
