@@ -40,7 +40,7 @@ error_declaracion : tipo lista_de_variables error {System.out.println("Error sin
            	  ;
 
 lista_de_variables : IDE {System.out.println("[Parser | Linea " + Lexico.linea + "] se leyo el identificador -> " + $1.sval);}
-      		   | lista_de_variables ',' IDE
+      		   | lista_de_variables ',' IDE {System.out.println("[Parser | Linea " + Lexico.linea + "] se leyo el identificador -> " + $3.sval);}
       		   | error_lista_de_variables
                    ;
 

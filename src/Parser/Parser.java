@@ -955,6 +955,10 @@ case 16:
 //#line 42 "gramatica.y"
 {System.out.println("[Parser | Linea " + Lexico.linea + "] se leyo el identificador -> " + val_peek(0).sval);}
 break;
+case 17:
+//#line 43 "gramatica.y"
+{System.out.println("[Parser | Linea " + Lexico.linea + "] se leyo el identificador -> " + val_peek(0).sval);}
+break;
 case 19:
 //#line 47 "gramatica.y"
 {System.out.println("Error sintáctico: Linea " + Lexico.linea + " se detectó una sentencia mal declarada, falta ',' entre los identificadores");}
@@ -1275,7 +1279,7 @@ case 130:
 //#line 212 "gramatica.y"
 {System.out.println("Error sintáctico: Linea " + Lexico.linea + " se detectaron parámetros mal declarados, falta el identificador de la derecha");}
 break;
-//#line 1202 "Parser.java"
+//#line 1206 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####
