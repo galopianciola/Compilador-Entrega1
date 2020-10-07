@@ -1,0 +1,1 @@
+PROC (UINT a, REF UINT b, DOUBLE c) NI = 2_ui { DOUBLE c; };

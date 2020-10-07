@@ -1,0 +1,1 @@
+FOR ( a = 2_ui ; a < b ; 5_ui) { DOUBLE c; };

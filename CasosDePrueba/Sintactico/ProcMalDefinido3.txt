@@ -1,0 +1,1 @@
+PROC a () NI = 2_ui { DOUBLE c; };
