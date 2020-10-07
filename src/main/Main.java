@@ -52,70 +52,12 @@ public class Main{
 
         Lexico l1 = new Lexico(codigo);
 
-        System.out.println("********* PARSER.RUN() *********");
+        System.out.println("\n********* PARSER.RUN() *********");
         Parser p = new Parser(l1);
         p.run();
 
         System.out.println("\n********* TABLA DE SIMBOLOS *********");
         tSimbolos.printTablaSimbolos();
 
-        /*Token token = l1.getToken();
-        if (token != null){
-            System.out.println(token.getId());
-            System.out.println(token.getLexema());
-        }
-        else
-            System.out.println("token null");
-
-
-        Token token2 = l1.getToken();
-        if (token2 != null){
-            System.out.println(token2.getId());
-            System.out.println(token2.getLexema());
-        }
-        else
-            System.out.println("token null");
-        Token token3 = l1.getToken();
-        if (token3 != null){
-            System.out.println(token3.getId());
-            System.out.println(token3.getLexema());
-        }
-        else
-            System.out.println("token null");
-        Token token4 = l1.getToken();
-        if (token4 != null){
-            System.out.println(token4.getId());
-            System.out.println(token4.getLexema());
-        }
-        else
-            System.out.println("token null");
-        /*Token token5 = l1.getToken();
-        if (token5 != null){
-            System.out.println(token5.getId());
-            System.out.println(token5.getLexema());
-        }
-        else
-            System.out.println("token null");
-        Token token6 = l1.getToken();
-        if (token6 != null){
-            System.out.println(token6.getId());
-            System.out.println(token6.getLexema());
-        }
-        else
-            System.out.println("token null");
-        Token token7 = l1.getToken();
-        if (token7 != null){
-            System.out.println(token7.getId());
-            System.out.println(token7.getLexema());
-        }
-        else
-            System.out.println("token null");
-        Token token8 = l1.getToken();
-        if (token8 != null){
-            System.out.println(token8.getId());
-            System.out.println(token8.getLexema());
-        }
-        else
-            System.out.println("token null");*/
     }
 }
